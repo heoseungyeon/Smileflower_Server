@@ -3,11 +3,11 @@ package com.smileflower.santa;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class SantaApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+//@SpringBootTest
+//class SantaApplicationTests {
+//
+//	@Test
+//	void contextLoads() {
+//	}
+//
+//}
