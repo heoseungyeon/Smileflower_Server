@@ -31,4 +31,48 @@ public class FlagDao {
         );
         return this.jdbcTemplate.queryForObject("select last_insert_id()",int.class);
     }
+
+    public GetRankRes getmyRank(int userIdx,int mountainIdx) {
+        return this.jdbcTemplate.queryForObject("select * from (select row_number() over (order by COUNT(f.userIdx) desc) as ranking,\n" +
+                        "       m.mountainIdx,\n" +
+                        "       f.userIdx,\n" +
+                        "       u.name as userName,\n" +
+                        "       u.userImageUrl   as userImage,\n" +
+                        "       COUNT(f.userIdx) as flagCount\n" +
+                        "from flag f\n" +
+                        "         inner join mountain m on f.mountainIdx = m.mountainIdx\n" +
+                        "         inner join user u on f.userIdx = u.userIdx\n" +
+                        "where f.mountainIdx = ?\n" +
+                        "group by f.userIdx\n" +
+                        "order by flagCount desc)a where userIdx = ?;",
+                (rs, rowNum) -> new GetRankRes(
+                        rs.getInt("userIdx"),
+                        rs.getString("userName"),
+                        rs.getString("userImage"),
+                        rs.getInt("ranking"),
+                        rs.getInt("flagCount")),
+                mountainIdx, userIdx);
+    }
+
+    public GetRankRes getfirstRank(int mountainIdx) {
+        return this.jdbcTemplate.queryForObject("select * from (select row_number() over (order by COUNT(f.userIdx) desc) as ranking,\n" +
+                        "       m.mountainIdx,\n" +
+                        "       f.userIdx,\n" +
+                        "       u.name as userName,\n" +
+                        "       u.userImageUrl   as userImage,\n" +
+                        "       COUNT(f.userIdx) as flagCount\n" +
+                        "from flag f\n" +
+                        "         inner join mountain m on f.mountainIdx = m.mountainIdx\n" +
+                        "         inner join user u on f.userIdx = u.userIdx\n" +
+                        "where f.mountainIdx = ?\n" +
+                        "group by f.userIdx\n" +
+                        "order by flagCount desc)a where ranking = 1;",
+                (rs, rowNum) -> new GetRankRes(
+                        rs.getInt("userIdx"),
+                        rs.getString("userName"),
+                        rs.getString("userImage"),
+                        rs.getInt("ranking"),
+                        rs.getInt("flagCount")),
+                mountainIdx);
+    }
 }

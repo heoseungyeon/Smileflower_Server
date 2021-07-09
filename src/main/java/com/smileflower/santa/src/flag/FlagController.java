@@ -74,5 +74,23 @@ public class FlagController {
 
     }
 
+    @ResponseBody
+    @GetMapping("{mountainIdx}/rank")
+    public BaseResponse<GetFlagRankRes> getFlagRank(@PathVariable("mountainIdx")int mountainIdx) {
+        try{
+            if(jwtService.getJwt()==null){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+
+            else{
+                int userIdx=jwtService.getUserIdx();
+                GetFlagRankRes getFlagRankRes = flagProvider.getFlagRank(userIdx,mountainIdx);
+                return new BaseResponse<>(getFlagRankRes);
+            }
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
 
 }

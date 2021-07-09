@@ -48,6 +48,20 @@ public class FlagProvider {
         }
 
     }
+    public GetFlagRankRes getFlagRank(int userIdx, int mountainIdx) throws BaseException {
+        GetFlagRankRes getFlagRankRes =new GetFlagRankRes();
+        for(int i=0;i<2;i++){
+            if(i==0){
+                GetRankRes getRankRes= flagDao.getfirstRank(mountainIdx);
+                getFlagRankRes.setFirstRank(getRankRes);
+            }
+            else {
+                GetRankRes getRankRes= flagDao.getmyRank(userIdx,mountainIdx);
+                getFlagRankRes.setMyRank(getRankRes);
+            }
+        }
+        return getFlagRankRes;
+    }
 
     public int checkMountain(String mountain){
         int exist = flagDao.checkMountain(mountain);
