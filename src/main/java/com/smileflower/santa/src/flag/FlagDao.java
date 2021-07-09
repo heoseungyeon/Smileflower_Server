@@ -31,6 +31,12 @@ public class FlagDao {
         );
         return this.jdbcTemplate.queryForObject("select last_insert_id()",int.class);
     }
+    public int createHard(PostFlagHardReq postFlagHardReq,int mountainIdx,int userIdx){
+        this.jdbcTemplate.update("insert into difficulty (userIdx,mountainIdx,difficulty) Values (?,?,?)",
+                userIdx,mountainIdx,postFlagHardReq.getDifficulty()
+        );
+        return this.jdbcTemplate.queryForObject("select last_insert_id()",int.class);
+    }
 
     public GetRankRes getmyRank(int userIdx,int mountainIdx) {
         return this.jdbcTemplate.queryForObject("select * from (select row_number() over (order by COUNT(f.userIdx) desc) as ranking,\n" +

@@ -53,4 +53,14 @@ public class FlagService {
             throw new BaseException(RESPONSE_ERROR);
         }
     }
+    public PostFlagHardRes createHard(PostFlagHardReq postFlagHardReq, int mountainIdx, int userIdx) throws BaseException {
+        if (postFlagHardReq.getDifficulty() >= 0 && postFlagHardReq.getDifficulty() <= 10) {
+            PostFlagHardRes postFlagHardRes = new PostFlagHardRes();
+            int difficultyIdx = flagDao.createHard(postFlagHardReq, mountainIdx, userIdx);
+
+            return postFlagHardRes;
+        } else {
+            throw new BaseException(RESPONSE_ERROR);
+        }
+    }
 }

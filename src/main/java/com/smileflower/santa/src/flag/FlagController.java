@@ -91,6 +91,25 @@ public class FlagController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+    @ResponseBody
+    @PostMapping("{mountainIdx}/hard")
+    public BaseResponse<PostFlagHardRes> createFlag(@RequestBody PostFlagHardReq postFlagHardReq,@PathVariable("mountainIdx")int mountainIdx ) throws BaseException {
+        try{
+            if(jwtService.getJwt()==null){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+
+            else{
+                int userIdx=jwtService.getUserIdx();
+                PostFlagHardRes postFlagHardRes = flagService.createHard(postFlagHardReq,mountainIdx,userIdx);
+                return new BaseResponse<>(postFlagHardRes);
+            }
+
+        }catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+
+    }
 
 
 }
