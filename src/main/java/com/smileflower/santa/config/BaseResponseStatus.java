@@ -36,6 +36,7 @@ public enum BaseResponseStatus {
     EXCEED_PW_RANGE(false,2021,"비밀번호를 16자 이하로 입력해주세요."),
     INSUFFICIENT_NAME_RANGE(false,2022,"별명을 2~15자 내로 입력해주세요."),
     USERS_INVALID_ACCESS(false,2023,"본인만 접근 가능합니다."),
+    NON_EXIST_MOUNTAIN(false,2024,"해당 산이 없습니다."),
 
 
 
