@@ -22,4 +22,13 @@ public class FlagDao {
     public int checkMountain(String mountain){
         return this.jdbcTemplate.queryForObject("select exists(select * from mountain where name=?)",int.class,mountain);
     }
+    public int checkMountainIdx(String mountain){
+        return this.jdbcTemplate.queryForObject("select mountainIdx from mountain where name = ?",int.class,mountain);
+    }
+    public int createFlag(PostFlagPictureReq postFlagPictureReq,int mountainIdx,int userIdx){
+        this.jdbcTemplate.update("insert into flag (userIdx,mountainIdx,pictureUrl) Values (?,?,?)",
+                userIdx,mountainIdx,postFlagPictureReq.getPictureUrl()
+        );
+        return this.jdbcTemplate.queryForObject("select last_insert_id()",int.class);
+    }
 }

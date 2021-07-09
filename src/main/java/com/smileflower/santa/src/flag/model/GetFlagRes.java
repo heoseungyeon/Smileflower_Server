@@ -11,5 +11,6 @@ import java.util.List;
 @Setter
 
 public class GetFlagRes {
+    private int mountainIdx;
     private String mountain= new String();
 }
