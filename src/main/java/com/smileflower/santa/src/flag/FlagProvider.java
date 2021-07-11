@@ -63,8 +63,16 @@ public class FlagProvider {
         return getFlagRankRes;
     }
 
+    public List<GetPickRes> getPick(int userIdx) throws BaseException {
+        List<GetPickRes> getPickRes= flagDao.getPick(userIdx);
+        return getPickRes;
+    }
+
     public int checkMountain(String mountain){
         int exist = flagDao.checkMountain(mountain);
         return exist;
+    }
+    public char checkPick(int userIdx, int mountainIdx){
+        return flagDao.checkPick(userIdx,mountainIdx);
     }
 }

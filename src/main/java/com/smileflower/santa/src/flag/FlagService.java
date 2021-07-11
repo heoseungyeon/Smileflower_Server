@@ -63,4 +63,24 @@ public class FlagService {
             throw new BaseException(RESPONSE_ERROR);
         }
     }
+
+    @Transactional
+    public PatchPickRes patchPick(int userIdx, int mountainIdx) throws BaseException{
+        int exist=flagDao.checkPickExist(userIdx,mountainIdx);
+        if(exist==1) {
+            char status = flagProvider.checkPick(userIdx, mountainIdx);
+            if (status == 'T') {
+                PatchPickRes patchPickRes = flagDao.patchPick("F", userIdx, mountainIdx);
+                return patchPickRes;
+            }
+            else{
+                PatchPickRes patchPickRes = flagDao.patchPick("T", userIdx,mountainIdx);
+                return patchPickRes;
+            }
+        } else{
+            PatchPickRes patchPickRes =flagDao.createPick("T",userIdx,mountainIdx);
+            return patchPickRes;
+        }
+
+    }
 }

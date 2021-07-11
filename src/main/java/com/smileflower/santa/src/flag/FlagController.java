@@ -17,7 +17,7 @@ import static com.smileflower.santa.config.BaseResponseStatus.*;
 import static com.smileflower.santa.utils.ValidationRegex.isRegexEmail;
 
 @RestController
-@RequestMapping("/app/flags")
+@RequestMapping("/app")
 public class FlagController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -55,7 +55,7 @@ public class FlagController {
     }
 
     @ResponseBody
-    @PostMapping("{mountainIdx}")
+    @PostMapping("/flags/{mountainIdx}")
     public BaseResponse<PostFlagPictureRes> createFlag(@RequestBody PostFlagPictureReq postFlagPictureReq,@PathVariable("mountainIdx")int mountainIdx ) throws BaseException {
         try{
             if(jwtService.getJwt()==null){
@@ -75,7 +75,7 @@ public class FlagController {
     }
 
     @ResponseBody
-    @GetMapping("{mountainIdx}/rank")
+    @GetMapping("/flags/{mountainIdx}/rank")
     public BaseResponse<GetFlagRankRes> getFlagRank(@PathVariable("mountainIdx")int mountainIdx) {
         try{
             if(jwtService.getJwt()==null){
@@ -92,7 +92,7 @@ public class FlagController {
         }
     }
     @ResponseBody
-    @PostMapping("{mountainIdx}/hard")
+    @PostMapping("/flags/{mountainIdx}/hard")
     public BaseResponse<PostFlagHardRes> createFlag(@RequestBody PostFlagHardReq postFlagHardReq,@PathVariable("mountainIdx")int mountainIdx ) throws BaseException {
         try{
             if(jwtService.getJwt()==null){
@@ -111,5 +111,42 @@ public class FlagController {
 
     }
 
+    @ResponseBody
+    @PatchMapping ("/picks/{mountainIdx}")
+    public BaseResponse<PatchPickRes> patchPickRes(@PathVariable("mountainIdx") int mountainIdx) throws BaseException {
+        try{
+            if(jwtService.getJwt()==null){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+
+            else{
+                int userIdx=jwtService.getUserIdx();
+                PatchPickRes patchPickRes = flagService.patchPick(userIdx,mountainIdx);
+                return new BaseResponse<>(patchPickRes);
+            }
+
+        }catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+
+    }
+
+    @ResponseBody
+    @GetMapping("/picks")
+    public BaseResponse<List<GetPickRes>> getPick() {
+        try{
+            if(jwtService.getJwt()==null){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+
+            else{
+                int userIdx=jwtService.getUserIdx();
+                List<GetPickRes> getPickRes = flagProvider.getPick(userIdx);
+                return new BaseResponse<>(getPickRes);
+            }
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 }
