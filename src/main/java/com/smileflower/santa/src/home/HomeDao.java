@@ -24,6 +24,10 @@ public class HomeDao {
         return this.jdbcTemplate.query("select m.mountainIdx," +
                         "m.name as mountainName,\n" +
                         "       m.imageUrl       as mountainImage,\n" +
+                        "       (select round(avg(d.difficulty))\n" +
+                        "        from difficulty\n" +
+                        "                 inner join difficulty d on m.mountainIdx = d.mountainIdx\n" +
+                        "       where m.mountainIdx = d.mountainIdx) as difficulty,\n" +
                         "       f.userIdx,\n" +
                         "       u.name as userName,\n" +
                         "       u.userImageUrl   as userImage,\n" +
@@ -39,6 +43,7 @@ public class HomeDao {
                         rs.getInt("mountainIdx"),
                         rs.getString("mountainName"),
                         rs.getString("mountainImage"),
+                        rs.getInt("difficulty"),
                         rs.getInt("userIdx"),
                         rs.getString("userName"),
                         rs.getString("userImage"),

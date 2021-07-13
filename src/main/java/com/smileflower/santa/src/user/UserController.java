@@ -84,12 +84,11 @@ public class UserController {
 
 
     @ResponseBody
-    @PostMapping("/login") //마찬가지로 아무것도 없는 것은 post방식으로 /app/users 를 사용하겠다는 의미
+    @PostMapping("/login") 
     public BaseResponse<PostUserLoginRes> loginUser(@RequestBody PostUserLoginReq postUserLoginReq) throws BaseException {  // json으로 받아오는데 알아서 객체가 되어 받아짐 -> PostUserReq를 보면 받아올 것에 대한 객체가 구성되어 있고
         if(postUserLoginReq.getEmailId() == null){   //validation처리
             return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
         }
-        //이메일 정규표현     // 이건 5주차 skip
         if(!isRegexEmail(postUserLoginReq.getEmailId())){   // 형식적 validation
             return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
         }

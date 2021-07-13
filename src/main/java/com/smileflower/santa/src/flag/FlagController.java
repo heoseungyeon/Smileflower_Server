@@ -37,7 +37,7 @@ public class FlagController {
 
     //Query String
     @ResponseBody
-    @GetMapping("")
+    @GetMapping("/flags")
     public BaseResponse<GetFlagRes> getFlag(@RequestParam(required = true) String mountain) {
         try{
             if(jwtService.getJwt()==null){
