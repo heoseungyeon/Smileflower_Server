@@ -98,7 +98,7 @@ public class UserProvider {
     }
 
 
-    public int checkJwt(String jwt){
+    public int checkJwt(String jwt) {
         int exist = userDao.checkJwt(jwt);
         return exist;
     }

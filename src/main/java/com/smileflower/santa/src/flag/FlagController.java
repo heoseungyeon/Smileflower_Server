@@ -93,7 +93,7 @@ public class FlagController {
     }
     @ResponseBody
     @PostMapping("/flags/{mountainIdx}/hard")
-    public BaseResponse<PostFlagHardRes> createFlag(@RequestBody PostFlagHardReq postFlagHardReq,@PathVariable("mountainIdx")int mountainIdx ) throws BaseException {
+    public BaseResponse<PostFlagHardRes> createHard(@RequestBody PostFlagHardReq postFlagHardReq,@PathVariable("mountainIdx")int mountainIdx ) throws BaseException {
         try{
             if(jwtService.getJwt()==null){
                 return new BaseResponse<>(EMPTY_JWT);

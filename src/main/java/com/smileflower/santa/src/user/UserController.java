@@ -134,16 +134,18 @@ public class UserController {
             }
     }
 
+    @ResponseBody
+    @PostMapping("/name-check")
+    public BaseResponse<PostNameRes> checkName(@RequestBody PostNameReq postNameReq) throws BaseException {
+        try{
 
+            PostNameRes postNameRes = userService.checkName(postNameReq);
 
-    
-
-
-
-
-
-
-
+            return new BaseResponse<>(postNameRes);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 
 

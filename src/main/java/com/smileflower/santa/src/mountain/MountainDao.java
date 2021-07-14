@@ -41,8 +41,10 @@ public class MountainDao {
                         "                       u.name as userName,\n" +
                         "                       u.userImageUrl   as userImage,\n" +
                         "                       COUNT(f.userIdx) as flagCount\n" +
-                        "                      ,case when timediff(now(),f.createdAt)<1 then concat(minute(timediff(now(),f.createdAt)),'분전')\n" +
-                        "when timediff(now(),f.createdAt)<24 then concat(hour(timediff(now(),f.createdAt)),'시간전') else concat(day(timediff(now(),f.createdAt)),'일전') end agoTime\n" +
+                        "                      ,case\n" +
+                        "           when minute(timediff(now(), max(f.createdAt))) < 1 then concat(minute(timediff(now(), max(f.createdAt))), '분전')\n" +
+                        "           when hour(timediff(now(), max(f.createdAt))) < 24 then concat(hour(timediff(now(), max(f.createdAt))), '시간전')\n" +
+                        "           else concat(day(timediff(now(), max(f.createdAt))), '일전') end       agoTime\n" +
                         "\n" +
                         "                from flag f\n" +
                         "                         inner join mountain m on f.mountainIdx = m.mountainIdx\n" +
@@ -66,8 +68,10 @@ public class MountainDao {
                         "                       u.name as userName,\n" +
                         "                       u.userImageUrl   as userImage,\n" +
                         "                       COUNT(f.userIdx) as flagCount\n" +
-                        "                      ,case when timediff(now(),f.createdAt)<1 then concat(minute(timediff(now(),f.createdAt)),'분전')\n" +
-                        "when timediff(now(),f.createdAt)<24 then concat(hour(timediff(now(),f.createdAt)),'시간전') else concat(day(timediff(now(),f.createdAt)),'일전') end agoTime\n" +
+                        "                      ,case\n" +
+                        "           when minute(timediff(now(), max(f.createdAt))) < 1 then concat(minute(timediff(now(), max(f.createdAt))), '분전')\n" +
+                        "           when hour(timediff(now(), max(f.createdAt))) < 24 then concat(hour(timediff(now(), max(f.createdAt))), '시간전')\n" +
+                        "           else concat(day(timediff(now(), max(f.createdAt))), '일전') end       agoTime\n" +
                         "\n" +
                         "                from flag f\n" +
                         "                         inner join mountain m on f.mountainIdx = m.mountainIdx\n" +

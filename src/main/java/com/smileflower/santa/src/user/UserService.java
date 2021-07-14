@@ -30,7 +30,7 @@ public class UserService {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setDataSource(DataSource dataSource){
+    public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -45,16 +45,16 @@ public class UserService {
     //POST
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
         //중복
-        if(postUserReq.getPassword().equals(postUserReq.getPasswordCheck())){
-            if(userProvider.checkName(postUserReq.getName()) ==1){
+        if (postUserReq.getPassword().equals(postUserReq.getPasswordCheck())) {
+            if (userProvider.checkName(postUserReq.getName()) == 1) {
                 throw new BaseException(POST_USER_EXISTS_NAME);
             }
-            if(userProvider.checkEmailId(postUserReq.getEmailId()) ==1){
+            if (userProvider.checkEmailId(postUserReq.getEmailId()) == 1) {
                 throw new BaseException(POST_USERS_EXISTS_EMAIL);
             }
 
             String pwd;
-            try{
+            try {
                 //암호화
                 pwd = new AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(postUserReq.getPassword());
                 postUserReq.setPassword(pwd);
@@ -66,9 +66,8 @@ public class UserService {
 
             //jwt발급
             String jwt = jwtService.createJwt(userIdx);
-            return new PostUserRes(jwt,userIdx);
-        }
-        else{
+            return new PostUserRes(jwt, userIdx);
+        } else {
             throw new BaseException(PASSWORD_CONFIRM_ERROR);
         }
 
@@ -79,17 +78,16 @@ public class UserService {
     public PostUserLoginRes loginUser(PostUserLoginReq postUserLoginReq) throws BaseException {
         //System.out.println("테스트1:"+postUserLoginReq.getEmailId());
 
-        int userIdx = userProvider.checkAccount(postUserLoginReq.getEmailId(),postUserLoginReq.getPassword());
+        int userIdx = userProvider.checkAccount(postUserLoginReq.getEmailId(), postUserLoginReq.getPassword());
         String name;
-        if(userProvider.checkLogExist(userIdx)!=1){  // 신규로 처음 로그인하는 사람을 위한
-            name = userDao.recordLog(userIdx,"I");
+        if (userProvider.checkLogExist(userIdx) != 1) {  // 신규로 처음 로그인하는 사람을 위한
+            name = userDao.recordLog(userIdx, "I");
 
-        }
-        else{
-            if(userProvider.checkLog(userIdx).equals("I")){
+        } else {
+            if (userProvider.checkLog(userIdx).equals("I")) {
                 throw new BaseException(ALREADY_LOGGED);
             }
-            name = userDao.recordLog(userIdx,"I");
+            name = userDao.recordLog(userIdx, "I");
 
         }
 
@@ -98,24 +96,34 @@ public class UserService {
         String jwt = jwtService.createJwt(userIdx);
         int jwtIdx = userDao.postJwt(jwt);
 
-        return new PostUserLoginRes(jwt,userIdx,name);
+        return new PostUserLoginRes(jwt, userIdx, name);
     }
 
 
-
     public PatchUserLogoutRes patchLogout(int userIdx) throws BaseException {
-        if(userProvider.checkLog(userIdx).equals("I")){
+        if (userProvider.checkLog(userIdx).equals("I")) {
             PatchUserLogoutRes patchUserLogoutRes = userDao.patchLogout(userIdx);
             int jwtIdx = userDao.patchJwtStatus(jwtService.getJwt());
 
             return patchUserLogoutRes;
-        }
-        else{
+        } else {
             throw new BaseException(ALREADY_LOGOUT);
         }
     }
-    
 
-
-
+    public PostNameRes checkName(PostNameReq postNameReq) throws BaseException {
+        PostNameRes postNameRes = new PostNameRes();
+        if (userProvider.checkName(postNameReq.getName()) == 1) {
+            postNameRes.setStatus("중복된 닉네임 입니다.");
+            postNameRes.setBool(false);
+            return postNameRes;
+        }
+         else {
+            postNameRes.setStatus("사용할 수 있는 닉네임 입니다.");
+            postNameRes.setBool(true);
+            return postNameRes;
+        }
+    }
 }
+
+
