@@ -19,11 +19,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
     }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/templates/","classpath:/static/","classpath:/resources/templates/")
-                .setCacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES));
-    }
 }

@@ -69,9 +69,9 @@ public class AppleJwtUtils {
     public Claims getClaimsBy(String identityToken) {
         try {
             ApplePublicKeyResponse response = appleClient.getAppleAuthPublicKey();
-            System.out.println("response = " + response);
+
             String headerOfIdentityToken = identityToken.substring(0, identityToken.indexOf("."));
-            System.out.println("headerOfIdentityToken = " + headerOfIdentityToken);
+
             Map<String, String> header = null;
             try {
                 header = new ObjectMapper().readValue(new String(Base64.getDecoder().decode(headerOfIdentityToken), "UTF-8"), Map.class);
@@ -80,7 +80,7 @@ public class AppleJwtUtils {
             }
             ApplePublicKeyResponse.Key key = response.getMatchedKeyBy(header.get("kid"), header.get("alg"))
                     .orElseThrow(() -> new NullPointerException("Failed get public key from apple's id server."));
-            System.out.println("key = " + key);
+
             byte[] nBytes = Base64.getUrlDecoder().decode(key.getN());
             byte[] eBytes = Base64.getUrlDecoder().decode(key.getE());
 
@@ -90,21 +90,15 @@ public class AppleJwtUtils {
             RSAPublicKeySpec publicKeySpec = new RSAPublicKeySpec(n, e);
             KeyFactory keyFactory = KeyFactory.getInstance(key.getKty());
             PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
-            System.out.println("publicKey = " + publicKey.toString());
-            System.out.println("jwtparse"+Jwts.parser().setSigningKey(publicKey).parseClaimsJws(identityToken).getBody().toString());
+
             return Jwts.parser().setSigningKey(publicKey).parseClaimsJws(identityToken).getBody();
         } catch (NoSuchAlgorithmException e) {
-            System.out.println("error : 1");
         } catch (InvalidKeySpecException e) {
-            System.out.println("error : 2");
         } catch (SignatureException | MalformedJwtException e){
-            System.out.println("error : 3");
             //토큰 서명 검증 or 구조 문제 (Invalid token)
         } catch(ExpiredJwtException e){
-            System.out.println("error : 4");
             //토큰이 만료됐기 때문에 클라이언트는 토큰을 refresh 해야함.
         } catch(Exception e){
-            System.out.println("error : 5");
         }
         return null;
     }
@@ -137,7 +131,6 @@ public class AppleJwtUtils {
 
     public AppleToken.Response getTokenByCode(String client_secret, String code) throws IOException {
         AppleToken.Request request = AppleToken.Request.of(code,CLIENT_ID, client_secret,"authorization_code",null);
-        System.out.println("request = " + request.getCode()+request.getClient_id()+request.getClient_secret());
         AppleToken.Response response = appleClient.getToken(request);
         return response;
     }
