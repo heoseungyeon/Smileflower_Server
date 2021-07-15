@@ -21,8 +21,8 @@ public class UserDao {
 
 
     public int createUser(PostUserReq postUserReq){
-        this.jdbcTemplate.update("insert into user (createdAt,  emailId, name ,pw,userImageUrl ) VALUES (NOW(),?,?,?,?)",
-                new Object[]{postUserReq.getEmailId(), postUserReq.getName() ,postUserReq.getPassword(), postUserReq.getUserImageUrl()}
+        this.jdbcTemplate.update("insert into user (createdAt,  emailId, name ,pw ) VALUES (NOW(),?,?,?)",
+                new Object[]{postUserReq.getEmailId(), postUserReq.getName() ,postUserReq.getPassword()}
         );
         return this.jdbcTemplate.queryForObject("select last_insert_id()",int.class);
     }
@@ -53,6 +53,13 @@ public class UserDao {
                         rs.getString("pw"),
                         rs.getInt("userIdx")),
                 email);
+    }
+
+    public GetAutoRes getAuto(String jwt){
+        return this.jdbcTemplate.queryForObject("select status from jwtmanagement where jwt=?",
+                (rs, rowNum) -> new GetAutoRes(
+                        rs.getString("status")),
+                jwt);
     }
 
 

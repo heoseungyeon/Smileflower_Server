@@ -10,11 +10,12 @@ import com.smileflower.santa.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 
 import static com.smileflower.santa.config.BaseResponseStatus.*;
-import static com.smileflower.santa.utils.ValidationRegex.isRegexEmail;
+import static com.smileflower.santa.utils.ValidationRegex.*;
 
 @RestController
 @RequestMapping("/app/users")
@@ -48,7 +49,7 @@ public class UserController {
     @PostMapping("")
     public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) throws BaseException {
         //req에 입력하지 않은 경우
-        if(postUserReq.getEmailId() == null || postUserReq.getPassword()==null || postUserReq.getUserImageUrl()==null || postUserReq.getName()==null){
+        if(postUserReq.getEmailId() == null || postUserReq.getPassword()==null || postUserReq.getName()==null){
             return new BaseResponse<>(POST_USERS_EMPTY);
         }
 
@@ -147,6 +148,29 @@ public class UserController {
         }
     }
 
+    @ResponseBody
+    @GetMapping("/auto-login")
+    public BaseResponse<GetAutoRes> autologin() throws BaseException{
+        try{
+            if(jwtService.getJwt()==null){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+            else if(userProvider.checkJwt(jwtService.getJwt())==1){
+                return new BaseResponse<>(INVALID_JWT);
+
+            }
+
+            else{
+                String jwt=jwtService.getJwt();
+                GetAutoRes getAutoRes = userProvider.getAuto(jwt);
+                return new BaseResponse<>(getAutoRes);
+            }
+
+        }catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+
+    }
 
 
 

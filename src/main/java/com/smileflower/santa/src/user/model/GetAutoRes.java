@@ -6,9 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PostNameReq {
-    private String name;
-    public PostNameReq(){
-
-    }
+@AllArgsConstructor
+public class GetAutoRes {
+    private String stauts;
 }

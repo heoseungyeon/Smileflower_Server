@@ -103,6 +103,11 @@ public class UserProvider {
         return exist;
     }
 
+    public GetAutoRes getAuto(String jwt) throws BaseException {
+        GetAutoRes getAutoRes = userDao.getAuto(jwt);
+        return getAutoRes;
+    }
+
 
 
 }

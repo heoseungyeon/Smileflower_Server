@@ -12,6 +12,4 @@ public class PostUserReq {
     private String name;
     private String password;
     private String passwordCheck;
-    private String userImageUrl;
-
 }
