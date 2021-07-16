@@ -1,4 +1,4 @@
-package com.smileflower.santa.apple.model;
+package com.smileflower.santa.apple.model.dto;
 
 public class Key {
 

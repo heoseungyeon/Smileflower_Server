@@ -1,7 +1,12 @@
 package com.smileflower.santa.apple.service;
 
-import com.smileflower.santa.apple.model.AppleToken;
+import com.smileflower.santa.apple.model.domain.AppleUser;
+import com.smileflower.santa.apple.model.domain.Email;
+import com.smileflower.santa.apple.model.dto.*;
+import com.smileflower.santa.apple.repository.AppleJdbcRepository;
+import com.smileflower.santa.apple.repository.AppleRepository;
 import com.smileflower.santa.apple.utils.AppleJwtUtils;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +17,41 @@ public class AppleServiceImpl implements AppleService {
 
     @Autowired
     AppleJwtUtils appleJwtUtils;
+    @Autowired
+    AppleRepository appleRepository;
+
+    @Override
+    public CheckUserResponse checkUser(String id_token) {
+        Claims claim = appleJwtUtils.getClaimsBy(id_token);
+        Email email = new Email((String)claim.get("email"));
+        if(appleRepository.findByEmail(email))
+            return new CheckUserResponse(email,true);
+        else
+            return new CheckUserResponse(email,false);
+
+    }
+
+    public AppleSigninResponse createUser(AppleSigninRequest appleSigninRequest){
+        if(appleRepository.findByEmail(appleSigninRequest.getUserEmail()))
+            appleRepository.save(new AppleUser(appleSigninRequest.getUserEmail(),appleSigninRequest.getName()));
+        AppleToken.Response appleLoginResponse = new AppleToken.Response();
+        try {
+            appleLoginResponse = appleJwtUtils.getTokenByCode(appleJwtUtils.makeClientSecret(), appleSigninRequest.getAuthorizationCode());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new AppleSigninResponse(appleLoginResponse.getRefresh_token(),appleSigninRequest.getUserEmail().getEmail(),appleSigninRequest.getName());
+    }
+
+    public AppleLoginResponse loginUser(AppleLoginRequest appleLoginRequest){
+        AppleToken.Response tokenResponse = new AppleToken.Response();
+        try {
+            tokenResponse = appleJwtUtils.getTokenByRefreshToken(appleJwtUtils.makeClientSecret(), appleLoginRequest.getRefreshToken());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new AppleLoginResponse(appleJwtUtils.getEmail(tokenResponse.getId_token()).getEmail(),appleLoginRequest.getRefreshToken());
+    }
 
     /**
      * 유효한 id_token인 경우 client_secret 생성
@@ -30,35 +70,5 @@ public class AppleServiceImpl implements AppleService {
             }
         }
         return null;
-    }
-
-    /**
-     * code 또는 refresh_token가 유효한지 Apple Server에 검증 요청
-     *
-     * @param client_secret
-     * @param code
-     * @param refresh_token
-     * @return
-     */
-    @Override
-    public AppleToken.Response requestCodeValidations(String client_secret, String code, String refresh_token) {
-
-        AppleToken.Response tokenResponse = new AppleToken.Response();
-
-        if (client_secret != null && code != null && refresh_token == null) {
-            try {
-                tokenResponse = appleJwtUtils.getTokenByCode(client_secret, code);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (client_secret != null && code == null && refresh_token != null) {
-            try {
-                tokenResponse = appleJwtUtils.getTokenByRefreshToken(client_secret, refresh_token);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return tokenResponse;
     }
 }

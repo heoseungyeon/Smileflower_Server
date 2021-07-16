@@ -1,15 +1,15 @@
 package com.smileflower.santa.apple.service;
 
-import com.smileflower.santa.apple.model.AppleToken;
-import com.smileflower.santa.apple.model.TokenResponse;
-import org.springframework.stereotype.Service;
-
-import java.util.Map;
+import com.smileflower.santa.apple.model.dto.*;
 
 public interface AppleService {
 
-    String getAppleClientSecret(String id_token);
+    CheckUserResponse checkUser(String id_token);
 
-    AppleToken.Response requestCodeValidations(String client_secret, String code, String refresh_token);
+    AppleSigninResponse createUser(AppleSigninRequest appleSigninRequest);
+
+    AppleLoginResponse loginUser(AppleLoginRequest appleLoginRequest);
+
+    String getAppleClientSecret(String id_token);
 
 }

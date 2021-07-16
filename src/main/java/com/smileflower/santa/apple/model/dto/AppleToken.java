@@ -1,10 +1,13 @@
-package com.smileflower.santa.apple.model;
+package com.smileflower.santa.apple.model.dto;
 
 public class AppleToken {
 
     public static class Request {
         private String code;
         private String client_id;
+        private String client_secret;
+        private String grant_type;
+        private String refresh_token;
 
         public String getCode() {
             return code;
@@ -45,10 +48,6 @@ public class AppleToken {
         public void setRefresh_token(String refresh_token) {
             this.refresh_token = refresh_token;
         }
-
-        private String client_secret;
-        private String grant_type;
-        private String refresh_token;
 
         public static Request of(String code, String clientId, String clientSecret, String grantType, String refreshToken) {
             Request request = new Request();

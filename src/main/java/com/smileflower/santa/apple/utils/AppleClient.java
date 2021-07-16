@@ -1,8 +1,8 @@
 package com.smileflower.santa.apple.utils;
 
-import com.smileflower.santa.apple.model.ApplePublicKeyResponse;
-import com.smileflower.santa.apple.model.AppleToken;
-import com.smileflower.santa.apple.model.Keys;
+import com.smileflower.santa.apple.model.dto.AppleLoginResponse;
+import com.smileflower.santa.apple.model.dto.ApplePublicKeyResponse;
+import com.smileflower.santa.apple.model.dto.AppleToken;
 import com.smileflower.santa.config.FeignConfig;
 import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.Encoder;

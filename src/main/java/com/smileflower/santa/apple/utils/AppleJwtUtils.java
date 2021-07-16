@@ -2,8 +2,12 @@ package com.smileflower.santa.apple.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.smileflower.santa.apple.model.ApplePublicKeyResponse;
-import com.smileflower.santa.apple.model.AppleToken;
+import com.smileflower.santa.apple.model.domain.Email;
+import com.smileflower.santa.apple.model.dto.AppleAuthResponse;
+import com.smileflower.santa.apple.model.dto.AppleLoginResponse;
+import com.smileflower.santa.apple.model.dto.ApplePublicKeyResponse;
+import com.smileflower.santa.apple.model.dto.AppleToken;
+import feign.FeignException;
 import io.jsonwebtoken.*;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.openssl.PEMParser;
@@ -103,6 +107,19 @@ public class AppleJwtUtils {
         return null;
     }
 
+    public Email getEmail(String identityToken){
+        return new Email((String)getClaimsBy(identityToken).get("email"));
+    }
+
+    public Email getEmailByRefreshToken(String refreshToken){
+        Email email = null;
+        try {
+            email =  new Email((String)getClaimsBy(getTokenByRefreshToken(makeClientSecret(), refreshToken).getId_token()).get("email"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return email;
+    }
 
     public String makeClientSecret() throws IOException {
         Date expirationDate = Date.from(LocalDateTime.now().plusDays(30).atZone(ZoneId.systemDefault()).toInstant());
@@ -131,6 +148,7 @@ public class AppleJwtUtils {
 
     public AppleToken.Response getTokenByCode(String client_secret, String code) throws IOException {
         AppleToken.Request request = AppleToken.Request.of(code,CLIENT_ID, client_secret,"authorization_code",null);
+
         AppleToken.Response response = appleClient.getToken(request);
         return response;
     }

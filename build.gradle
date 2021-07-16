@@ -36,6 +36,10 @@ dependencies {
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
 	//jws cause java11
 	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+	//spring builder
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
 }
 
 test {
