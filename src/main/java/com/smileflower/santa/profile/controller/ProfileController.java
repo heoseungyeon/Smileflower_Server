@@ -25,7 +25,6 @@ public class ProfileController {
     String token,@RequestPart(required = false) MultipartFile file){
         String email = appleJwtUtils.getEmailByRefreshToken(token).getEmail();
         if(file != null){
-            System.out.println("file = " + file.getName());
             return ApiResult.OK(
                     profileService.uploadImage(file,email)
             );
@@ -35,6 +34,15 @@ public class ProfileController {
                     profileService.deleteImage(email)
             );
         }
+    }
+    @GetMapping("/api/profile/upload")
+    public ApiResult<UploadImageResponse> uploadImage(@RequestHeader(value = "REFRESH-TOKEN")
+                                                              String token){
+        String email = appleJwtUtils.getEmailByRefreshToken(token).getEmail();
+        return ApiResult.OK(
+                profileService.getUploadImage(email)
+        );
+
     }
 
 }

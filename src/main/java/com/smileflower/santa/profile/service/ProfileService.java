@@ -35,7 +35,19 @@ public class ProfileService {
 
         deleteImageUrlByEmail(email);
 
-        return new UploadImageResponse("null");
+        return new UploadImageResponse(null);
+    }
+
+    public UploadImageResponse getUploadImage(String email){
+        //delete file
+        Profile user = profileRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("cannot find user"));
+
+        if(user.getUserImageUrl()!=null) {
+            return new UploadImageResponse(s3Service.getFileUrl(user.getUserImageUrl()));
+        }
+        else
+            return new UploadImageResponse(null);
     }
 
 
