@@ -1,34 +1,34 @@
-package com.smileflower.santa.user.model;
+package com.smileflower.santa.profile.model.domain;
 
 import java.time.LocalDateTime;
 
-public class User {
+public class Profile {
 
     //Member Field
     private final Long userIdx;
     private Email emailId;
     private String passwd;
-    private boolean isKakao;
-    private boolean isApple;
+    private int isKakao;
+    private int isApple;
     private String userImageUrl;
     private LocalDateTime updateAt;
     private LocalDateTime createAt;
     private String name;
 
     //Constructor
-    public User(Long userIdx, Email emailId, String passwd, String userImageUrl, LocalDateTime updateAt, LocalDateTime createAt, String name) {
+    public Profile(Long userIdx, Email emailId, String passwd, String userImageUrl, LocalDateTime updateAt, LocalDateTime createAt, String name) {
         this.userIdx = userIdx;
         this.emailId = emailId;
         this.passwd = passwd;
-        this.isKakao = false;
-        this.isApple = false;
+        this.isKakao = 0;
+        this.isApple = 0;
         this.userImageUrl = userImageUrl;
         this.updateAt = null;
         this.createAt = null;
         this.name = name;
     }
 
-    public User(Email emailId, String passwd,String name){
+    public Profile(Email emailId, String passwd, String name){
         this(null,emailId,passwd,"url",null,null,name);
     }
 
@@ -37,11 +37,11 @@ public class User {
         return userIdx;
     }
 
-    public boolean isKakao() {
+    public int isKakao() {
         return isKakao;
     }
 
-    public boolean isApple() {
+    public int isApple() {
         return isApple;
     }
 

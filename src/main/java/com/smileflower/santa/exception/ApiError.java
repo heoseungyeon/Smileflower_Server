@@ -1,4 +1,4 @@
-package com.smileflower.santa.apple.controller;
+package com.smileflower.santa.exception;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
