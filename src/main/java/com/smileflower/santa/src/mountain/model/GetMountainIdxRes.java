@@ -7,12 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GetMountainRes {
+public class GetMountainIdxRes {
     private int mountainIdx;
-    private String mountainImg;
-    private String mountainName;
-    private int difficulty;
-    private String high;
-    private String hot;
-    private String pick;
 }

@@ -37,8 +37,22 @@ public class MountainProvider {
     }
 
     public List<GetMountainRes> getMountain(int userIdx) throws BaseException {
-        List<GetMountainRes> getMountainRes = mountainDao.getMountain();
+        List<GetMountainRes> getMountainRes = mountainDao.getMountain(userIdx);
         return getMountainRes;
+    }
+    public GetMountainIdxRes getMountainIdx(int userIdx,String mountain) throws BaseException {
+        if(mountainDao.checkMountain(mountain)==1){
+            GetMountainIdxRes getMountainIdxRes = mountainDao.getMountainIdx(mountain);
+            return getMountainIdxRes;
+        }else{
+            throw new BaseException(NON_EXIST_MOUNTAIN);
+        }
+    }
+    public GetMapRes getMap(int userIdx,int mountainIdx) throws BaseException {
+
+        GetMapRes getMapRes = mountainDao.getMap(mountainIdx);
+        return getMapRes;
+
     }
 
     public GetMountainRankRes getMountainRank(int userIdx,int mountainIdx) throws BaseException {

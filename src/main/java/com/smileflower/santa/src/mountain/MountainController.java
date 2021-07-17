@@ -70,4 +70,41 @@ public class MountainController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    @ResponseBody
+    @GetMapping("/search")
+    public BaseResponse<GetMountainIdxRes> getFlag(@RequestParam(required = true) String mountain) throws BaseException {
+        try{
+            if(jwtService.getJwt()==null){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+            else if(mountain.equals("")){
+                return new BaseResponse<>(EMPTY_MOUNTAIN_INPUT);
+            }
+
+            else{
+                int userIdx=jwtService.getUserIdx();
+                GetMountainIdxRes getMountainIdxRes = mountainProvider.getMountainIdx(userIdx,mountain);
+                return new BaseResponse<>(getMountainIdxRes);
+            }
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    @GetMapping("/{mountainIdx}/map")
+    public BaseResponse<GetMapRes> getMap(@PathVariable("mountainIdx") int mountainIdx) throws BaseException{
+        try{
+            if(jwtService.getJwt()==null){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+            else{
+                int userIdx=jwtService.getUserIdx();
+                GetMapRes getMapRes = mountainProvider.getMap(userIdx,mountainIdx);
+                return new BaseResponse<>(getMapRes);
+            }
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }

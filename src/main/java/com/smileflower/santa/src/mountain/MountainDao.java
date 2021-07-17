@@ -20,19 +20,40 @@ public class MountainDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<GetMountainRes> getMountain() {
-        return this.jdbcTemplate.query("select m.mountainIdx, m.imageUrl as mountainImg, m.name as mountainName, round(avg(d.difficulty)) as difficulty\n" +
-                        ",concat('(',m.high,'m)') as high\n" +
+    public List<GetMountainRes> getMountain(int userIdx) {
+        return this.jdbcTemplate.query("select m.mountainIdx,\n" +
+                        "       m.imageUrl                as mountainImg,\n" +
+                        "       m.name                    as mountainName,\n" +
+                        "       round(avg(d.difficulty))  as difficulty\n" +
+                        "        ,\n" +
+                        "       concat('(', m.high, 'm)') as high,\n" +
+                        "       case when a.hot > 2 then '인기' else null end as hot,\n" +
+                        "       case when b.status = 'T' then 'T' else 'F' end as pick\n" +
                         "from mountain m\n" +
                         "         inner join difficulty d on m.mountainIdx = d.mountainIdx\n" +
-                        "group by m.mountainIdx order by m.mountainIdx;",
+                        "         left join (select mountainIdx, count(picklistIdx) as hot from picklist group by mountainIdx) a\n" +
+                        "                   on a.mountainIdx = m.mountainIdx\n" +
+                        "left join (select mountainIdx,status from picklist where userIdx =?) b on b.mountainIdx=m.mountainIdx\n" +
+                        "group by m.mountainIdx\n" +
+                        "order by m.mountainIdx",
                 (rs, rowNum) -> new GetMountainRes(
                         rs.getInt("mountainIdx"),
                         rs.getString("mountainImg"),
                         rs.getString("mountainName"),
                         rs.getInt("difficulty"),
-                        rs.getString("high"))
-        );
+                        rs.getString("high"),
+                        rs.getString("hot"),
+                        rs.getString("pick")),
+                userIdx);
+    }
+    public GetMountainIdxRes getMountainIdx(String mountain) {
+        return this.jdbcTemplate.queryForObject("select mountainIdx from mountain where mountain.name=?\n",
+                (rs, rowNum) -> new GetMountainIdxRes(
+                        rs.getInt("mountainIdx")),
+                mountain);
+    }
+    public int checkMountain(String mountain){
+        return this.jdbcTemplate.queryForObject("select exists(select mountainIdx from mountain where mountain.name=?)",int.class,mountain);
     }
 
     public List<GetRankRes> getRank(int mountainIdx){
@@ -88,6 +109,15 @@ public class MountainDao {
                         rs.getString("agoTime")),
                 mountainIdx,userIdx);
     }
+
+    public GetMapRes getMap(int mountainIdx){
+        return this.jdbcTemplate.queryForObject("select lat as latitude ,`long` as longitude from mountain where mountainIdx =?",
+                (rs, rowNum) -> new GetMapRes(
+                        rs.getDouble("latitude"),
+                        rs.getDouble("longitude")),
+                mountainIdx);
+    }
+
     public int checkMyRank(int userIdx,int mountainIdx){
         return this.jdbcTemplate.queryForObject("select exists(select * from (select row_number() over (order by COUNT(f.userIdx) desc, f.createdAt desc) as ranking,\n" +
                 "                       f.userIdx,\n" +

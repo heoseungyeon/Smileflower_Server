@@ -40,6 +40,7 @@ public enum BaseResponseStatus {
 
 
 
+
     /**
      * 3000 : Response 오류
      */
@@ -51,7 +52,7 @@ public enum BaseResponseStatus {
     POST_USERS_NONEXIST_ACCOUNT(false,3014,"아이디 또는 비밀번호가 잘못되었습니다."),
     ALREADY_LOGGED(false,3015,"이미 로그인되어 있습니다"),
     ALREADY_LOGOUT(false,3016,"이미 로그아웃되어 있습니다."),
-
+    EMPTY_MOUNTAIN_INPUT(false,3017,"검색할 산 이름을 입력해주세요."),
 
 
     /**
