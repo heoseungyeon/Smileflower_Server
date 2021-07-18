@@ -8,6 +8,9 @@ public class SantaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SantaApplication.class, args);
+		
+		long heapSize = Runtime.getRuntime().totalMemory();
+		System.out.println("HEAP Size(M) : "+ heapSize / (1024*1024) + " MB");
 	}
 
 }

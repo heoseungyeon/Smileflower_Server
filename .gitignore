@@ -37,3 +37,7 @@ out/
 
 ### VS Code ###
 .vscode/
+src/main/resources
+logs/
+gradle/
+nohup.out
