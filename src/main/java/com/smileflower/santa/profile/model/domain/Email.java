@@ -1,4 +1,4 @@
-package com.smileflower.santa.user.model;
+package com.smileflower.santa.profile.model.domain;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

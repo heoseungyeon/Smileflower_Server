@@ -1,4 +1,4 @@
-package com.smileflower.santa.apple.controller;
+package com.smileflower.santa.exception;
 
 
 import feign.FeignException;
@@ -6,7 +6,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +14,11 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
-import static com.smileflower.santa.apple.controller.ApiResult.ERROR;
+import static com.smileflower.santa.exception.ApiResult.ERROR;
+
 
 @ControllerAdvice
 public class GeneralExceptionHandler {
@@ -53,9 +55,13 @@ public class GeneralExceptionHandler {
     }
 
     // ========== HTTP 415 오류 처리 ==========
-    @ExceptionHandler(HttpMediaTypeException.class)
+    @ExceptionHandler({HttpMediaTypeException.class})
     private ResponseEntity<?> handleHttpMediaTypeException(Exception e) {
         return newResponse(e, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+    }
+    @ExceptionHandler({MultipartException.class, MissingServletRequestPartException.class})
+    private ResponseEntity<?> multipartException(Exception e) {
+        return newResponse(e, HttpStatus.BAD_REQUEST);
     }
 
     // ========== HTTP 401 오류 처리 ==========
