@@ -1,12 +1,8 @@
 package com.smileflower.santa.utils;
 
 
-import com.smileflower.santa.config.BaseException;
 import com.smileflower.santa.config.secret.Secret;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -69,5 +65,27 @@ public class JwtService {
         // 3. userIdx 추출
         return claims.getBody().get("userIdx",Integer.class);
     }
+    public int getUserIdxV2(){
+        //1. JWT 추출
+        String accessToken = getJwt();
+
+        // 2. JWT parsing
+        Jws<Claims> claims;
+        try{
+            // 3. userIdx 추출
+            return Jwts.parser()
+                    .setSigningKey(Secret.JWT_SECRET_KEY)
+                    .parseClaimsJws(accessToken)
+                    .getBody().get("userIdx",Integer.class);
+        } catch (SignatureException | MalformedJwtException e){
+            //토큰 서명 검증 or 구조 문제 (Invalid token)
+        } catch(ExpiredJwtException e){
+            //토큰이 만료됐기 때문에 클라이언트는 토큰을 refresh 해야함.
+        } catch(Exception e){
+        }
+
+        return -1;
+    }
+
 
 }
