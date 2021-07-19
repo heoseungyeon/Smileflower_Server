@@ -163,7 +163,7 @@ public class MountainDao {
     }
 
     public GetMapRes getMap(int mountainIdx){
-        return this.jdbcTemplate.queryForObject("select lat as latitude ,`long` as longitude from mountain where mountainIdx =?",
+        return this.jdbcTemplate.queryForObject("select  latitude , longitude from mountain where mountainIdx =?",
                 (rs, rowNum) -> new GetMapRes(
                         rs.getDouble("latitude"),
                         rs.getDouble("longitude")),

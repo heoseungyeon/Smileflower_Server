@@ -18,7 +18,7 @@ import java.util.List;
 
 import static com.smileflower.santa.config.BaseResponseStatus.*;
 
-
+import javax.transaction.Transactional;
 //Provider : Read의 비즈니스 로직 처리
 @Service
 public class FlagProvider {
@@ -35,9 +35,15 @@ public class FlagProvider {
         this.flagDao = flagDao;
         this.jwtService = jwtService;
     }
+    public int checkMountain(String mountain){
+        int exist = flagDao.checkMountain(mountain);
+        return exist;
+    }
+
+    @Transactional
     public GetFlagRes getFlag(int userIdx, String mountain) throws BaseException {
         if (flagDao.checkMountain(mountain)==1){
-            int mountainIdx = flagDao.checkMountainIdx(mountain);
+            int mountainIdx = flagDao.checkMountain(mountain);
             GetFlagRes getFlagRes = new GetFlagRes();
             getFlagRes.setMountainIdx(mountainIdx);
             getFlagRes.setMountain(mountain);
@@ -68,10 +74,6 @@ public class FlagProvider {
         return getPickRes;
     }
 
-    public int checkMountain(String mountain){
-        int exist = flagDao.checkMountain(mountain);
-        return exist;
-    }
     public char checkPick(int userIdx, int mountainIdx){
         return flagDao.checkPick(userIdx,mountainIdx);
     }
