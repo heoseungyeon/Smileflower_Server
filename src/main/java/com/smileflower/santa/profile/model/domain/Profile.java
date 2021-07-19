@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Profile {
 
     //Member Field
-    private final Long userIdx;
+    private final int userIdx;
     private Email emailId;
     private String passwd;
     private int isKakao;
@@ -16,7 +16,7 @@ public class Profile {
     private String name;
 
     //Constructor
-    public Profile(Long userIdx, Email emailId, String passwd, String userImageUrl, LocalDateTime updateAt, LocalDateTime createAt, String name) {
+    public Profile(int userIdx, Email emailId, String passwd, String userImageUrl, LocalDateTime updateAt, LocalDateTime createAt, String name) {
         this.userIdx = userIdx;
         this.emailId = emailId;
         this.passwd = passwd;
@@ -29,11 +29,11 @@ public class Profile {
     }
 
     public Profile(Email emailId, String passwd, String name){
-        this(null,emailId,passwd,"url",null,null,name);
+        this(0,emailId,passwd,"url",null,null,name);
     }
 
     //Getter
-    public Long getUserIdx() {
+    public int getUserIdx() {
         return userIdx;
     }
 

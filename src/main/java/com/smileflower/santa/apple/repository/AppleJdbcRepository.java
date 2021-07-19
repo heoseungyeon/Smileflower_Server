@@ -42,6 +42,18 @@ public class AppleJdbcRepository implements AppleRepository{
     }
 
     @Override
+    public boolean findByIdx(Long userIdx) {
+        String query = "select Count(*) from user where userIdx = ?";
+        Long param = userIdx;
+        int count = this.jdbcTemplate.queryForObject(query, new Object[]{param}, Integer.class);
+
+        if (count == 0)
+            return false;
+        else
+            return true;
+    }
+
+    @Override
     public String setStatus(String status) {
         return null;
     }

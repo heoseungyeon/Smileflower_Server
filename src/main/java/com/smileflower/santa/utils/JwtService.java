@@ -1,6 +1,7 @@
 package com.smileflower.santa.utils;
 
 
+import com.smileflower.santa.config.BaseException;
 import com.smileflower.santa.config.secret.Secret;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Service;
@@ -89,3 +90,4 @@ public class JwtService {
 
 
 }
+

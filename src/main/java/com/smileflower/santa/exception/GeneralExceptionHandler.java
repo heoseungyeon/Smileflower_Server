@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -65,6 +66,11 @@ public class GeneralExceptionHandler {
     }
 
     // ========== HTTP 401 오류 처리 ==========
+    @ExceptionHandler({MissingRequestHeaderException.class})
+    private ResponseEntity<?> missingRequestHeaderException(Exception e) {
+        return newResponse(e, HttpStatus.UNAUTHORIZED);
+    }
+
     // ========== HTTP 404 오류 처리 ==========
 
 }
