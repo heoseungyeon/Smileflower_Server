@@ -16077,3 +16077,107 @@ HEAP Size(M) : 40 MB
 13:50:31.360 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Initializing Spring DispatcherServlet 'dispatcherServlet']- Initializing Spring DispatcherServlet 'dispatcherServlet'
 13:50:31.361 INFO  [File:FrameworkServlet.java] [Func:initServletBean] [Line:525] [Message:Initializing Servlet 'dispatcherServlet']- Initializing Servlet 'dispatcherServlet'
 13:50:31.364 INFO  [File:FrameworkServlet.java] [Func:initServletBean] [Line:547] [Message:Completed initialization in 2 ms]- Completed initialization in 2 ms
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.3.8.RELEASE)
+
+16:28:26.452 INFO  [File:RepositoryConfigurationDelegate.java] [Func:registerRepositoriesIn] [Line:127] [Message:Bootstrapping Spring Data JPA repositories in DEFAULT mode.]- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+16:28:26.528 INFO  [File:RepositoryConfigurationDelegate.java] [Func:registerRepositoriesIn] [Line:187] [Message:Finished Spring Data repository scanning in 46ms. Found 0 JPA repository interfaces.]- Finished Spring Data repository scanning in 46ms. Found 0 JPA repository interfaces.
+16:28:27.636 INFO  [File:GenericScope.java] [Func:setSerializationId] [Line:295] [Message:BeanFactory id=e9153ad4-d229-3a11-b9aa-efda9d886477]- BeanFactory id=e9153ad4-d229-3a11-b9aa-efda9d886477
+16:28:29.395 INFO  [File:PostProcessorRegistrationDelegate.java] [Func:postProcessAfterInitialization] [Line:335] [Message:Bean 'com.smileflower.santa.apple.utils.AppleClient' of type [org.springframework.cloud.openfeign.FeignClientFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)]- Bean 'com.smileflower.santa.apple.utils.AppleClient' of type [org.springframework.cloud.openfeign.FeignClientFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+16:28:29.410 WARN  [File:EC2MetadataUtils.java] [Func:getItems] [Line:409] [Message:Unable to retrieve the requested metadata (/latest/user-data/). The requested metadata is not found at http://169.254.169.254/latest/user-data/]- Unable to retrieve the requested metadata (/latest/user-data/). The requested metadata is not found at http://169.254.169.254/latest/user-data/
+com.amazonaws.SdkClientException: The requested metadata is not found at http://169.254.169.254/latest/user-data/
+	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:89)
+	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:70)
+	at com.amazonaws.internal.InstanceMetadataServiceResourceFetcher.readResource(InstanceMetadataServiceResourceFetcher.java:75)
+	at com.amazonaws.internal.EC2ResourceFetcher.readResource(EC2ResourceFetcher.java:66)
+	at com.amazonaws.util.EC2MetadataUtils.getItems(EC2MetadataUtils.java:402)
+	at com.amazonaws.util.EC2MetadataUtils.getData(EC2MetadataUtils.java:371)
+	at com.amazonaws.util.EC2MetadataUtils.getData(EC2MetadataUtils.java:367)
+	at com.amazonaws.util.EC2MetadataUtils.getUserData(EC2MetadataUtils.java:363)
+	at org.springframework.cloud.aws.core.env.ec2.AmazonEc2InstanceDataPropertySource.getUserData(AmazonEc2InstanceDataPropertySource.java:123)
+	at org.springframework.cloud.aws.core.env.ec2.AmazonEc2InstanceDataPropertySource.getProperty(AmazonEc2InstanceDataPropertySource.java:95)
+	at org.springframework.boot.context.properties.source.SpringConfigurationPropertySource.getConfigurationProperty(SpringConfigurationPropertySource.java:84)
+	at org.springframework.boot.context.properties.source.SpringIterableConfigurationPropertySource.getConfigurationProperty(SpringIterableConfigurationPropertySource.java:100)
+	at org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource.findConfigurationProperty(ConfigurationPropertySourcesPropertySource.java:65)
+	at org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource.findConfigurationProperty(ConfigurationPropertySourcesPropertySource.java:53)
+	at org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource.getProperty(ConfigurationPropertySourcesPropertySource.java:42)
+	at org.springframework.core.env.PropertySourcesPropertyResolver.getProperty(PropertySourcesPropertyResolver.java:85)
+	at org.springframework.core.env.PropertySourcesPropertyResolver.getProperty(PropertySourcesPropertyResolver.java:68)
+	at org.springframework.core.env.AbstractPropertyResolver.getProperty(AbstractPropertyResolver.java:175)
+	at org.springframework.core.env.AbstractEnvironment.getProperty(AbstractEnvironment.java:551)
+	at org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration.persistenceExceptionTranslationPostProcessor(PersistenceExceptionTranslationAutoConfiguration.java:47)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:652)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:637)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1336)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1176)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:229)
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:723)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:536)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:405)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at com.smileflower.santa.SantaApplication.main(SantaApplication.java:13)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:107)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.WarLauncher.main(WarLauncher.java:59)
+16:28:30.298 INFO  [File:TomcatWebServer.java] [Func:initialize] [Line:108] [Message:Tomcat initialized with port(s): 8080 (http)]- Tomcat initialized with port(s): 8080 (http)
+16:28:30.325 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Initializing ProtocolHandler ["http-nio-8080"]]- Initializing ProtocolHandler ["http-nio-8080"]
+16:28:30.328 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Starting service [Tomcat]]- Starting service [Tomcat]
+16:28:30.328 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Starting Servlet engine: [Apache Tomcat/9.0.41]]- Starting Servlet engine: [Apache Tomcat/9.0.41]
+16:28:33.639 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Initializing Spring embedded WebApplicationContext]- Initializing Spring embedded WebApplicationContext
+16:28:33.639 INFO  [File:ServletWebServerApplicationContext.java] [Func:prepareWebApplicationContext] [Line:285] [Message:Root WebApplicationContext: initialization completed in 9285 ms]- Root WebApplicationContext: initialization completed in 9285 ms
+16:28:34.375 INFO  [File:HikariDataSource.java] [Func:getConnection] [Line:110] [Message:HikariPool-1 - Starting...]- HikariPool-1 - Starting...
+16:28:35.117 INFO  [File:HikariDataSource.java] [Func:getConnection] [Line:123] [Message:HikariPool-1 - Start completed.]- HikariPool-1 - Start completed.
+16:28:35.306 INFO  [File:LogHelper.java] [Func:logPersistenceUnitInformation] [Line:31] [Message:HHH000204: Processing PersistenceUnitInfo [name: default]]- HHH000204: Processing PersistenceUnitInfo [name: default]
+16:28:35.576 INFO  [File:Version.java] [Func:logVersion] [Line:44] [Message:HHH000412: Hibernate ORM core version 5.4.27.Final]- HHH000412: Hibernate ORM core version 5.4.27.Final
+16:28:36.092 INFO  [File:JavaReflectionManager.java] [Func:<clinit>] [Line:56] [Message:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}]- HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+16:28:36.489 INFO  [File:Dialect.java] [Func:<init>] [Line:175] [Message:HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect]- HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+16:28:36.976 INFO  [File:JtaPlatformInitiator.java] [Func:initiateService] [Line:52] [Message:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]]- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+16:28:37.000 INFO  [File:AbstractEntityManagerFactoryBean.java] [Func:buildNativeEntityManagerFactory] [Line:419] [Message:Initialized JPA EntityManagerFactory for persistence unit 'default']- Initialized JPA EntityManagerFactory for persistence unit 'default'
+16:28:37.390 WARN  [File:JpaBaseConfiguration.java] [Func:openEntityManagerInViewInterceptor] [Line:220] [Message:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning]- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+16:28:38.230 INFO  [File:UserDetailsServiceAutoConfiguration.java] [Func:getOrDeducePassword] [Line:86] [Message:
+
+Using generated security password: 8b64c507-354d-4618-9f91-66fbb64c83a3
+]- 
+
+Using generated security password: 8b64c507-354d-4618-9f91-66fbb64c83a3
+
+16:28:38.619 INFO  [File:DefaultSecurityFilterChain.java] [Func:<init>] [Line:43] [Message:Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1ec22831, org.springframework.security.web.context.SecurityContextPersistenceFilter@39c85c1a, org.springframework.security.web.header.HeaderWriterFilter@55fdf7f9, org.springframework.security.web.authentication.logout.LogoutFilter@4cfa83f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@62c72501, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@23ed382c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@63f855b, org.springframework.security.web.session.SessionManagementFilter@40113163, org.springframework.security.web.access.ExceptionTranslationFilter@7a3269f5]]- Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1ec22831, org.springframework.security.web.context.SecurityContextPersistenceFilter@39c85c1a, org.springframework.security.web.header.HeaderWriterFilter@55fdf7f9, org.springframework.security.web.authentication.logout.LogoutFilter@4cfa83f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@62c72501, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@23ed382c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@63f855b, org.springframework.security.web.session.SessionManagementFilter@40113163, org.springframework.security.web.access.ExceptionTranslationFilter@7a3269f5]
+16:28:38.666 WARN  [File:ArchaiusAutoConfiguration.java] [Func:configureArchaius] [Line:123] [Message:No spring.application.name found, defaulting to 'application']- No spring.application.name found, defaulting to 'application'
+16:28:38.677 WARN  [File:URLConfigurationSource.java] [Func:<init>] [Line:121] [Message:No URLs will be polled as dynamic configuration sources.]- No URLs will be polled as dynamic configuration sources.
+16:28:38.678 INFO  [File:URLConfigurationSource.java] [Func:<init>] [Line:122] [Message:To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.]- To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+16:28:38.689 WARN  [File:URLConfigurationSource.java] [Func:<init>] [Line:121] [Message:No URLs will be polled as dynamic configuration sources.]- No URLs will be polled as dynamic configuration sources.
+16:28:38.689 INFO  [File:URLConfigurationSource.java] [Func:<init>] [Line:122] [Message:To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.]- To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+16:28:39.125 INFO  [File:ExecutorConfigurationSupport.java] [Func:initialize] [Line:181] [Message:Initializing ExecutorService 'applicationTaskExecutor']- Initializing ExecutorService 'applicationTaskExecutor'
+16:28:39.896 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Starting ProtocolHandler ["http-nio-8080"]]- Starting ProtocolHandler ["http-nio-8080"]
+16:28:39.971 INFO  [File:TomcatWebServer.java] [Func:start] [Line:220] [Message:Tomcat started on port(s): 8080 (http) with context path '']- Tomcat started on port(s): 8080 (http) with context path ''
+HEAP Size(M) : 64 MB
+16:28:49.647 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Initializing Spring DispatcherServlet 'dispatcherServlet']- Initializing Spring DispatcherServlet 'dispatcherServlet'
+16:28:49.651 INFO  [File:FrameworkServlet.java] [Func:initServletBean] [Line:525] [Message:Initializing Servlet 'dispatcherServlet']- Initializing Servlet 'dispatcherServlet'
+16:28:49.677 INFO  [File:FrameworkServlet.java] [Func:initServletBean] [Line:547] [Message:Completed initialization in 26 ms]- Completed initialization in 26 ms

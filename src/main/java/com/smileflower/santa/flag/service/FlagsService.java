@@ -13,12 +13,12 @@ import java.io.InputStream;
 import java.util.UUID;
 
 @Service
-public class FlagService {
+public class FlagsService {
 
     private final FlagRepository flagRepository;
     private final S3Service s3Service;
 
-    public FlagService(FlagRepository flagRepository, S3Service s3Service) {
+    public FlagsService(FlagRepository flagRepository, S3Service s3Service) {
         this.flagRepository = flagRepository;
         this.s3Service = s3Service;
     }
