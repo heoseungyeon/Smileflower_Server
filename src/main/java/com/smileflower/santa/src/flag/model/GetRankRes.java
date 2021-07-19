@@ -12,5 +12,6 @@ public class GetRankRes {
     private String userName;
     private String userImage;
     private int ranking;
+    private String level;
     private int flagCount;
 }
