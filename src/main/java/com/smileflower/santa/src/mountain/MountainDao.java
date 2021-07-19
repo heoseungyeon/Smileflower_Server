@@ -56,6 +56,30 @@ public class MountainDao {
         return this.jdbcTemplate.queryForObject("select exists(select mountainIdx from mountain where mountain.name=?)",int.class,mountain);
     }
 
+    public List<GetRoadRes> getRoad(int mountainIdx){
+        return this.jdbcTemplate.query("select roadIdx,\n" +
+                        "\n" +
+                        "       concat(roadIdx,'코스')              as courseNum,\n" +
+                        "       road.difficulty,\n" +
+                        "       concat(road.length, 'km') as length,\n" +
+                        "       road.time as time ,\n" +
+                        "       course,\n" +
+                        "       road.latitude,\n" +
+                        "       road.longitude\n" +
+                        "from road\n" +
+                        "where mountainIdx = ?;",
+                (rs, rowNum) -> new GetRoadRes(
+                        rs.getInt("roadIdx"),
+                        rs.getString("courseNum"),
+                        rs.getInt("difficulty"),
+                        rs.getString("length"),
+                        rs.getString("time"),
+                        rs.getString("course"),
+                        rs.getDouble("latitude"),
+                        rs.getDouble("longitude")),
+                mountainIdx);
+    }
+
     public List<GetRankRes> getRank(int mountainIdx){
         return this.jdbcTemplate.query("select row_number() over (order by COUNT(f.userIdx) desc, f.createdAt desc) as ranking,\n" +
                         "                       f.userIdx,\n" +
@@ -108,6 +132,34 @@ public class MountainDao {
                         rs.getInt("flagCount"),
                         rs.getString("agoTime")),
                 mountainIdx,userIdx);
+    }
+
+    public GetInfoRes getInfo(int userIdx, int mountainIdx){
+        return this.jdbcTemplate.queryForObject("select m.mountainIdx,\n" +
+                        "                       m.imageUrl                as mountainImg,\n" +
+                        "                       m.name                    as mountainName,\n" +
+                        "       m.address,\n" +
+                        "                       round(avg(d.difficulty))  as difficulty\n" +
+                        "                        ,\n" +
+                        "                       concat(m.high, 'm') as high,\n" +
+                        "                       case when a.hot > 2 then '인기' else null end as hot,\n" +
+                        "                       case when b.status = 'T' then 'T' else 'F' end as pick\n" +
+                        "                from mountain m\n" +
+                        "                         inner join difficulty d on m.mountainIdx = d.mountainIdx\n" +
+                        "                         left join (select mountainIdx, count(picklistIdx) as hot from picklist group by mountainIdx) a\n" +
+                        "                                   on a.mountainIdx = m.mountainIdx\n" +
+                        "                left join (select mountainIdx,status from picklist where userIdx =?) b on b.mountainIdx=m.mountainIdx\n" +
+                        "                where m.mountainIdx=?;",
+                (rs, rowNum) -> new GetInfoRes(
+                        rs.getInt("mountainIdx"),
+                        rs.getString("mountainImg"),
+                        rs.getString("mountainName"),
+                        rs.getString("address"),
+                        rs.getInt("difficulty"),
+                        rs.getString("high"),
+                        rs.getString("hot"),
+                        rs.getString("pick")),
+                userIdx,mountainIdx);
     }
 
     public GetMapRes getMap(int mountainIdx){

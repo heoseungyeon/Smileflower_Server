@@ -71,4 +71,17 @@ public class MountainProvider {
         int exist = mountainDao.checkMyRank(userIdx,mountainIdx);
         return exist;
     }
+
+    public GetInfoPage getMountainInfo(int userIdx,int mountainIdx) throws BaseException {
+        List<GetRoadRes> getRoadRes = mountainDao.getRoad(mountainIdx);
+        GetInfoPage getInfoPage = new GetInfoPage();
+
+        GetInfoRes getInfoRes = mountainDao.getInfo(userIdx,mountainIdx);
+        getInfoPage.setInfo(getInfoRes);
+
+        getInfoPage.setRoad(getRoadRes);
+
+        return getInfoPage;
+
+    }
 }

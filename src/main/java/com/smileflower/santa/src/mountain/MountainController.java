@@ -107,4 +107,23 @@ public class MountainController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    @ResponseBody
+    @GetMapping("/{mountainIdx}/info")
+    public BaseResponse<GetInfoPage> getMountainInfo(@PathVariable("mountainIdx")int mountainIdx) throws BaseException {
+        try{
+            if(jwtService.getJwt()==null){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+
+            else{
+                int userIdx=jwtService.getUserIdx();
+                GetInfoPage getInfoPage = mountainProvider.getMountainInfo(userIdx,mountainIdx);
+                return new BaseResponse<>(getInfoPage);
+            }
+
+        }catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }
