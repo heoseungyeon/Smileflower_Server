@@ -22,20 +22,20 @@ public class MountainDao {
 
     public List<GetMountainRes> getMountain(int userIdx) {
         return this.jdbcTemplate.query("select m.mountainIdx,\n" +
-                        "       m.imageUrl                as mountainImg,\n" +
-                        "       m.name                    as mountainName,\n" +
-                        "       round(avg(d.difficulty))  as difficulty\n" +
-                        "        ,\n" +
-                        "       concat('(', m.high, 'm)') as high,\n" +
-                        "       case when a.hot > 2 then '인기' else null end as hot,\n" +
-                        "       case when b.status = 'T' then 'T' else 'F' end as pick\n" +
-                        "from mountain m\n" +
-                        "         inner join difficulty d on m.mountainIdx = d.mountainIdx\n" +
-                        "         left join (select mountainIdx, count(picklistIdx) as hot from picklist group by mountainIdx) a\n" +
-                        "                   on a.mountainIdx = m.mountainIdx\n" +
-                        "left join (select mountainIdx,status from picklist where userIdx =?) b on b.mountainIdx=m.mountainIdx\n" +
-                        "group by m.mountainIdx\n" +
-                        "order by m.mountainIdx",
+                        "                       m.imageUrl                as mountainImg,\n" +
+                        "                       m.name                    as mountainName,\n" +
+                        "                       round(avg(d.difficulty))  as difficulty\n" +
+                        "                        ,\n" +
+                        "                       concat('(', m.high, 'm)') as high,\n" +
+                        "                       case when a.hot > 2 then '인기' else null end as hot,\n" +
+                        "                       case when b.status = 'T' then 'T' else 'F' end as pick\n" +
+                        "                from mountain m\n" +
+                        "                         left join difficulty d on m.mountainIdx = d.mountainIdx\n" +
+                        "                         left join (select mountainIdx, count(picklistIdx) as hot from picklist group by mountainIdx) a\n" +
+                        "                                   on a.mountainIdx = m.mountainIdx\n" +
+                        "                left join (select mountainIdx,status from picklist where userIdx =?) b on b.mountainIdx=m.mountainIdx\n" +
+                        "                group by m.mountainIdx\n" +
+                        "                order by m.mountainIdx",
                 (rs, rowNum) -> new GetMountainRes(
                         rs.getInt("mountainIdx"),
                         rs.getString("mountainImg"),

@@ -43,7 +43,7 @@ public class HomeProvider {
         String userImage=homeDao.getUserImage(userIdx);
         getHomeRes.setUserImage(userImage);
         String homeStatus= "추천 산";
-        for(int i=1; i<10; i++) {
+        for(int i=1; i<100; i++) {
             if (homeDao.checkFlagMountain(i)==1 && homeDao.checkFlagUser(userIdx,i)==1) {
                 homeStatus= "내가 정복한 산";
                 getHomeRes.setHomeStatus(homeStatus);
@@ -51,6 +51,8 @@ public class HomeProvider {
                 List<GetHomeMountainRes> getHomeMountainRes = homeDao.getHomeMountain(userIdx, mountainIdx);
                 getmyflagMountainRes.getMountain().add(getHomeMountainRes.get(0));
             }
+        }
+        for (int i =1; i<5;i++){
             if (homeDao.checkFlagMountain(i)==1 && homeStatus.equals("추천 산")){
                 homeStatus= "추천 산";
                 getHomeRes.setHomeStatus(homeStatus);
