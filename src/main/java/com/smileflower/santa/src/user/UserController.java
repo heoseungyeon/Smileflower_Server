@@ -162,7 +162,8 @@ public class UserController {
 
             else{
                 String jwt=jwtService.getJwt();
-                GetAutoRes getAutoRes = userProvider.getAuto(jwt);
+                int userIdx=jwtService.getUserIdx();
+                GetAutoRes getAutoRes = userProvider.getAuto(jwt,userIdx);
                 return new BaseResponse<>(getAutoRes);
             }
 

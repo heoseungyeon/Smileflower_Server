@@ -6,7 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
+
 public class GetAutoRes {
+    private int userIdx;
     private String stauts;
+    public GetAutoRes(){
+
+    }
 }

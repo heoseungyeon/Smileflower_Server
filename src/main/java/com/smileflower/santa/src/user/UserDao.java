@@ -55,10 +55,8 @@ public class UserDao {
                 email);
     }
 
-    public GetAutoRes getAuto(String jwt){
-        return this.jdbcTemplate.queryForObject("select status from jwtmanagement where jwt=?",
-                (rs, rowNum) -> new GetAutoRes(
-                        rs.getString("status")),
+    public String getAuto(String jwt){
+        return this.jdbcTemplate.queryForObject("select status from jwtmanagement where jwt=?",String.class,
                 jwt);
     }
 
