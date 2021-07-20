@@ -6,12 +6,12 @@ public class FlagResponse {
     private Long flagIdx;
     private int userIdx;
     private Long mountainIdx;
-    private LocalDateTime createdAt;
+    private String createdAt;
     private String pictureUrl;
     private int flagCount;
     private String name;
 
-    public FlagResponse(Long flagIdx, int userIdx, Long mountainIdx,  LocalDateTime createdAt, String pictureUrl,int flagCount,String name) {
+    public FlagResponse(Long flagIdx, int userIdx, Long mountainIdx,  String createdAt, String pictureUrl,int flagCount,String name) {
         this.flagIdx = flagIdx;
         this.userIdx = userIdx;
         this.mountainIdx = mountainIdx;
@@ -45,11 +45,11 @@ public class FlagResponse {
         this.mountainIdx = mountainIdx;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -115,8 +116,9 @@ public class ProfileService {
             level = (flagsResponseCnt+2)/2;
         }
         for(int i=0;i<pictures.size();i++){
-            picturesResponse.add(new PictureResponse(pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),pictures.get(i).getImageUrl(),pictures.get(i).getCreatedAt()));
+            picturesResponse.add(new PictureResponse(pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),pictures.get(i).getImageUrl(),pictures.get(i).getCreatedAt().now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         }
+
         ProfileResponse profileResponse = new ProfileResponse(userIdx,profileRepository.findNameByIdx(userIdx),level,flagsResponseCnt,flagsResponseCnt+picturesResponse.size(),flagsResponse,picturesResponse);
 
         return profileResponse;
@@ -127,7 +129,7 @@ public class ProfileService {
         List<Picture> pictures = profileRepository.findPicturesByIdx(userIdx);
         List<PictureResponse> picturesResponse = new ArrayList<PictureResponse>();
         for(int i=0;i<pictures.size();i++){
-            picturesResponse.add(new PictureResponse(pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),pictures.get(i).getImageUrl(),pictures.get(i).getCreatedAt()));
+            picturesResponse.add(new PictureResponse(pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),pictures.get(i).getImageUrl(),pictures.get(i).getCreatedAt().now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         }
 
         return new PostsResponse(userIdx,profileRepository.findNameByIdx(userIdx),flagsResponse,picturesResponse);

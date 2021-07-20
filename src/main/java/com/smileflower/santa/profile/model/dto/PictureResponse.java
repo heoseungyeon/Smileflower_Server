@@ -6,9 +6,9 @@ public class PictureResponse {
     private Long pictureIdx;
     private int userIdx;
     private String imageUrl;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
-    public PictureResponse(Long pictureIdx, int userIdx, String imageUrl, LocalDateTime createdAt) {
+    public PictureResponse(Long pictureIdx, int userIdx, String imageUrl, String createdAt) {
         this.pictureIdx = pictureIdx;
         this.userIdx = userIdx;
         this.imageUrl = imageUrl;
@@ -39,11 +39,11 @@ public class PictureResponse {
         this.imageUrl = imageUrl;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 }
