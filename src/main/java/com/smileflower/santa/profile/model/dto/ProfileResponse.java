@@ -10,7 +10,7 @@ public class ProfileResponse {
     private int level;
     private int flagCount;
     private int postCount;
-    private List<ProfilePostsResponse> profilePostsResponses;
+    private List<ProfilePostsResponse> posts;
 
     public ProfileResponse(int userIdx, String name, int level, int flagCount, int postCount, List<ProfilePostsResponse> profilePostsResponses) {
         this.userIdx = userIdx;
@@ -18,7 +18,7 @@ public class ProfileResponse {
         this.level = level;
         this.flagCount = flagCount;
         this.postCount = postCount;
-        this.profilePostsResponses = profilePostsResponses;
+        this.posts = posts;
     }
 
     public int getUserIdx() {
@@ -61,11 +61,11 @@ public class ProfileResponse {
         this.postCount = postCount;
     }
 
-    public List<ProfilePostsResponse> getProfilePostsResponses() {
-        return profilePostsResponses;
+    public List<ProfilePostsResponse> getPosts() {
+        return posts;
     }
 
-    public void setProfilePostsResponses(List<ProfilePostsResponse> profilePostsResponses) {
-        this.profilePostsResponses = profilePostsResponses;
+    public void setPosts(List<ProfilePostsResponse> posts) {
+        this.posts = posts;
     }
 }
