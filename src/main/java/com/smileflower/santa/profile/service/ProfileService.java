@@ -128,7 +128,7 @@ public class ProfileService {
         }
         Collections.sort(profilePostsResponses);
 
-        ProfileResponse profileResponse = new ProfileResponse(userIdx,profileRepository.findNameByIdx(userIdx),level,flagsResponseCnt,flagsResponseCnt+picturesResponse.size(),profilePostsResponses);
+        ProfileResponse profileResponse = new ProfileResponse(userIdx,profileRepository.findNameByIdx(userIdx),level,flagsResponseCnt,flagsResponseCnt+picturesResponse.size(),getUploadImage(userIdx).getFileUrl(),profilePostsResponses);
 
         return profileResponse;
     }

@@ -10,14 +10,16 @@ public class ProfileResponse {
     private int level;
     private int flagCount;
     private int postCount;
+    private String fileUrl;
     private List<ProfilePostsResponse> posts;
 
-    public ProfileResponse(int userIdx, String name, int level, int flagCount, int postCount, List<ProfilePostsResponse> posts) {
+    public ProfileResponse(int userIdx, String name, int level, int flagCount, int postCount,String fileUrl, List<ProfilePostsResponse> posts) {
         this.userIdx = userIdx;
         this.name = name;
         this.level = level;
         this.flagCount = flagCount;
         this.postCount = postCount;
+        this.fileUrl = fileUrl;
         this.posts = posts;
     }
 
@@ -67,5 +69,13 @@ public class ProfileResponse {
 
     public void setPosts(List<ProfilePostsResponse> posts) {
         this.posts = posts;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 }
