@@ -1,11 +1,15 @@
 package com.smileflower.santa.exception;
 
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import feign.FeignException;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +74,24 @@ public class GeneralExceptionHandler {
     private ResponseEntity<?> missingRequestHeaderException(Exception e) {
         return newResponse(e, HttpStatus.UNAUTHORIZED);
     }
+    // ========== HTTP 401 오류 처리 ==========
+    @ExceptionHandler({SignatureException.class,MalformedJwtException.class})
+    private ResponseEntity<?> signatureAndMalformedJwtException(Exception e) {
+        return newResponse(e, HttpStatus.UNAUTHORIZED);
+    }
 
+    // ========== HTTP 401 오류 처리 ==========
+    //데이터 없을 때 디비에
+    @ExceptionHandler({EmptyResultDataAccessException.class})
+    private ResponseEntity<?> emptyResultDataAccessException(Exception e) {
+        return newResponse(e, HttpStatus.BAD_REQUEST);
+    }
+    // ========== HTTP 401 오류 처리 ==========
+    //데이터 없을 때 디비에
+    @ExceptionHandler({NotFoundException.class})
+    private ResponseEntity<?> notFoundException(Exception e) {
+        return newResponse(e, HttpStatus.UNAUTHORIZED);
+    }
     // ========== HTTP 404 오류 처리 ==========
 
 }

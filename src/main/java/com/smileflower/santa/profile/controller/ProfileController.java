@@ -46,13 +46,11 @@ public class ProfileController {
     }
 
 
-
     @GetMapping("/{userIdx}")
     public ApiResult<ProfileResponse> profile(@PathVariable("userIdx") int userIdx) {
         return ApiResult.OK(
                 profileService.findProfile(userIdx)
         );
-
     }
 
     @GetMapping("/{userIdx}/posts")

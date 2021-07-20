@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -104,6 +105,7 @@ public class ProfileService {
     }
 
     public ProfileResponse findProfile(int userIdx) {
+        List<ProfilePostsResponse> profilePostsResponses = new ArrayList<>();
         List<FlagResponse> flagsResponse = profileRepository.findFlagsByIdx(userIdx);
         List<Picture> pictures = profileRepository.findPicturesByIdx(userIdx);
         List<PictureResponse> picturesResponse = new ArrayList<PictureResponse>();
@@ -115,11 +117,18 @@ public class ProfileService {
         else{
             level = (flagsResponseCnt+2)/2;
         }
+//        for(int i=0;i<pictures.size();i++){
+//            picturesResponse.add(new PictureResponse(pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),pictures.get(i).getImageUrl(),pictures.get(i).getCreatedAt().now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+//        }
         for(int i=0;i<pictures.size();i++){
-            picturesResponse.add(new PictureResponse(pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),pictures.get(i).getImageUrl(),pictures.get(i).getCreatedAt().now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+            profilePostsResponses.add(new ProfilePostsResponse(false,null,pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),0,null,null,pictures.get(i).getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),pictures.get(i).getImageUrl()));
         }
+        for(int i=0;i<flagsResponse.size();i++){
+            profilePostsResponses.add(new ProfilePostsResponse(true,flagsResponse.get(i).getFlagIdx(),null,flagsResponse.get(i).getUserIdx(),flagsResponse.get(i).getFlagCount(),flagsResponse.get(i).getMountainIdx(),flagsResponse.get(i).getName(),flagsResponse.get(i).getCreatedAt(),null));
+        }
+        Collections.sort(profilePostsResponses);
 
-        ProfileResponse profileResponse = new ProfileResponse(userIdx,profileRepository.findNameByIdx(userIdx),level,flagsResponseCnt,flagsResponseCnt+picturesResponse.size(),flagsResponse,picturesResponse);
+        ProfileResponse profileResponse = new ProfileResponse(userIdx,profileRepository.findNameByIdx(userIdx),level,flagsResponseCnt,flagsResponseCnt+picturesResponse.size(),profilePostsResponses);
 
         return profileResponse;
     }
@@ -128,8 +137,9 @@ public class ProfileService {
         List<FlagResponse> flagsResponse = profileRepository.findFlagsByIdx(userIdx);
         List<Picture> pictures = profileRepository.findPicturesByIdx(userIdx);
         List<PictureResponse> picturesResponse = new ArrayList<PictureResponse>();
+
         for(int i=0;i<pictures.size();i++){
-            picturesResponse.add(new PictureResponse(pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),pictures.get(i).getImageUrl(),pictures.get(i).getCreatedAt().now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+            picturesResponse.add(new PictureResponse(pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),pictures.get(i).getImageUrl(),pictures.get(i).getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         }
 
         return new PostsResponse(userIdx,profileRepository.findNameByIdx(userIdx),flagsResponse,picturesResponse);

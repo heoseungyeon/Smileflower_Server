@@ -84,7 +84,6 @@ public class JwtService {
             //토큰이 만료됐기 때문에 클라이언트는 토큰을 refresh 해야함.
         } catch(Exception e){
         }
-
         return -1;
     }
 

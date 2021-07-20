@@ -79,7 +79,7 @@ public class ProfileJdbcRepository implements ProfileRepository {
                 rs.getLong("flagIdx"),
                 rs.getInt("userIdx"),
                 rs.getLong("mountainIdx"),
-                rs.getTimestamp("createdAt").toLocalDateTime().now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                rs.getTimestamp("createdAt").toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                 rs.getString("pictureUrl"),
                 rs.getInt("cnt"),
                 rs.getString("name")

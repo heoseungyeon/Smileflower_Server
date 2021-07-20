@@ -10,17 +10,15 @@ public class ProfileResponse {
     private int level;
     private int flagCount;
     private int postCount;
-    private List<FlagResponse> flags;
-    private List<PictureResponse> pictures;
+    private List<ProfilePostsResponse> profilePostsResponses;
 
-    public ProfileResponse(int userIdx, String name, int level, int flagCount, int postCount, List<FlagResponse> flags,List<PictureResponse> pictures) {
+    public ProfileResponse(int userIdx, String name, int level, int flagCount, int postCount, List<ProfilePostsResponse> profilePostsResponses) {
         this.userIdx = userIdx;
         this.name = name;
         this.level = level;
         this.flagCount = flagCount;
         this.postCount = postCount;
-        this.flags = flags;
-        this.pictures = pictures;
+        this.profilePostsResponses = profilePostsResponses;
     }
 
     public int getUserIdx() {
@@ -63,19 +61,11 @@ public class ProfileResponse {
         this.postCount = postCount;
     }
 
-    public List<FlagResponse> getFlags() {
-        return flags;
+    public List<ProfilePostsResponse> getProfilePostsResponses() {
+        return profilePostsResponses;
     }
 
-    public void setFlags(List<FlagResponse> flags) {
-        this.flags = flags;
-    }
-
-    public List<PictureResponse> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<PictureResponse> pictures) {
-        this.pictures = pictures;
+    public void setProfilePostsResponses(List<ProfilePostsResponse> profilePostsResponses) {
+        this.profilePostsResponses = profilePostsResponses;
     }
 }
