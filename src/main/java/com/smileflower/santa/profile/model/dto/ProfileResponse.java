@@ -12,7 +12,7 @@ public class ProfileResponse {
     private int postCount;
     private List<ProfilePostsResponse> posts;
 
-    public ProfileResponse(int userIdx, String name, int level, int flagCount, int postCount, List<ProfilePostsResponse> profilePostsResponses) {
+    public ProfileResponse(int userIdx, String name, int level, int flagCount, int postCount, List<ProfilePostsResponse> posts) {
         this.userIdx = userIdx;
         this.name = name;
         this.level = level;
