@@ -56,7 +56,7 @@ public class ProfileController {
     @GetMapping("/{userIdx}/posts")
     public ApiResult<PostsResponse> flags(@PathVariable("userIdx") int userIdx) {
         return ApiResult.OK(
-                profileService.findFlags(userIdx)
+                profileService.findPosts(userIdx)
         );
     }
 

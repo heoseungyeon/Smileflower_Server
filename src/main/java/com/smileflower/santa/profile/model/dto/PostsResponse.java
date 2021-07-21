@@ -5,14 +5,12 @@ import java.util.List;
 public class PostsResponse {
     private int userIdx;
     private String name;
-    private List<FlagResponse> flags;
-    private List<PictureResponse> pictures;
+    private List<ProfilePostsResponse> posts;
 
-    public PostsResponse(int userIdx, String name, List<FlagResponse> flags, List<PictureResponse> pictures) {
+    public PostsResponse(int userIdx, String name, List<ProfilePostsResponse> posts) {
         this.userIdx = userIdx;
         this.name = name;
-        this.flags = flags;
-        this.pictures = pictures;
+        this.posts = posts;
     }
 
     public int getUserIdx() {
@@ -31,20 +29,12 @@ public class PostsResponse {
         this.name = name;
     }
 
-    public List<FlagResponse> getFlags() {
-        return flags;
+    public List<ProfilePostsResponse> getPosts() {
+        return posts;
     }
 
-    public void setFlags(List<FlagResponse> flags) {
-        this.flags = flags;
-    }
-
-    public List<PictureResponse> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<PictureResponse> pictures) {
-        this.pictures = pictures;
+    public void setPosts(List<ProfilePostsResponse> posts) {
+        this.posts = posts;
     }
 }
 

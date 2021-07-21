@@ -108,7 +108,6 @@ public class ProfileService {
         List<ProfilePostsResponse> profilePostsResponses = new ArrayList<>();
         List<FlagResponse> flagsResponse = profileRepository.findFlagsByIdx(userIdx);
         List<Picture> pictures = profileRepository.findPicturesByIdx(userIdx);
-        List<PictureResponse> picturesResponse = new ArrayList<PictureResponse>();
         int flagsResponseCnt = flagsResponse.size();
         int level = 0;
         if (flagsResponseCnt<=2){
@@ -121,28 +120,32 @@ public class ProfileService {
 //            picturesResponse.add(new PictureResponse(pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),pictures.get(i).getImageUrl(),pictures.get(i).getCreatedAt().now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
 //        }
         for(int i=0;i<pictures.size();i++){
-            profilePostsResponses.add(new ProfilePostsResponse(false,null,pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),0,null,null,pictures.get(i).getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),pictures.get(i).getImageUrl()));
+            profilePostsResponses.add(new ProfilePostsResponse(false,null,pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),0,null,null,pictures.get(i).getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),s3Service.getFileUrl(pictures.get(i).getImageUrl())));
         }
         for(int i=0;i<flagsResponse.size();i++){
-            profilePostsResponses.add(new ProfilePostsResponse(true,flagsResponse.get(i).getFlagIdx(),null,flagsResponse.get(i).getUserIdx(),flagsResponse.get(i).getFlagCount(),flagsResponse.get(i).getMountainIdx(),flagsResponse.get(i).getName(),flagsResponse.get(i).getCreatedAt(),null));
+            profilePostsResponses.add(new ProfilePostsResponse(true,flagsResponse.get(i).getFlagIdx(),null,flagsResponse.get(i).getUserIdx(),flagsResponse.get(i).getFlagCount(),flagsResponse.get(i).getMountainIdx(),flagsResponse.get(i).getName(),flagsResponse.get(i).getCreatedAt(),s3Service.getFileUrl(flagsResponse.get(i).getPictureUrl())));
         }
         Collections.sort(profilePostsResponses);
 
-        ProfileResponse profileResponse = new ProfileResponse(userIdx,profileRepository.findNameByIdx(userIdx),level,flagsResponseCnt,flagsResponseCnt+picturesResponse.size(),getUploadImage(userIdx).getFileUrl(),profilePostsResponses);
+        ProfileResponse profileResponse = new ProfileResponse(userIdx,profileRepository.findNameByIdx(userIdx),level,flagsResponseCnt,flagsResponseCnt+pictures.size(),getUploadImage(userIdx).getFileUrl(),profilePostsResponses);
 
         return profileResponse;
     }
 
-    public PostsResponse findFlags(int userIdx) {
+    public PostsResponse findPosts(int userIdx) {
+        List<ProfilePostsResponse> profilePostsResponses = new ArrayList<>();
         List<FlagResponse> flagsResponse = profileRepository.findFlagsByIdx(userIdx);
         List<Picture> pictures = profileRepository.findPicturesByIdx(userIdx);
-        List<PictureResponse> picturesResponse = new ArrayList<PictureResponse>();
 
         for(int i=0;i<pictures.size();i++){
-            picturesResponse.add(new PictureResponse(pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),pictures.get(i).getImageUrl(),pictures.get(i).getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+            profilePostsResponses.add(new ProfilePostsResponse(false,null,pictures.get(i).getPictureIdx(),pictures.get(i).getUserIdx(),0,null,null,pictures.get(i).getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),s3Service.getFileUrl(pictures.get(i).getImageUrl())));
         }
+        for(int i=0;i<flagsResponse.size();i++){
+            profilePostsResponses.add(new ProfilePostsResponse(true,flagsResponse.get(i).getFlagIdx(),null,flagsResponse.get(i).getUserIdx(),flagsResponse.get(i).getFlagCount(),flagsResponse.get(i).getMountainIdx(),flagsResponse.get(i).getName(),flagsResponse.get(i).getCreatedAt(),s3Service.getFileUrl(flagsResponse.get(i).getPictureUrl())));
+        }
+        Collections.sort(profilePostsResponses);
 
-        return new PostsResponse(userIdx,profileRepository.findNameByIdx(userIdx),flagsResponse,picturesResponse);
+        return new PostsResponse(userIdx,profileRepository.findNameByIdx(userIdx),profilePostsResponses);
 
     }
 
