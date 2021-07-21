@@ -6,6 +6,7 @@ import com.smileflower.santa.profile.model.domain.Picture;
 import com.smileflower.santa.profile.model.domain.Profile;
 import com.smileflower.santa.profile.model.dto.*;
 import com.smileflower.santa.profile.repository.ProfileRepository;
+import com.smileflower.santa.utils.S3Service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

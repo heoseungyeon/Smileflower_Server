@@ -29,7 +29,6 @@ public class MountainProvider {
     private JdbcTemplate jdbcTemplate;
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
     public MountainProvider(MountainDao mountainDao, JwtService jwtService) {
 
         this.mountainDao = mountainDao;

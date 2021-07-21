@@ -1,10 +1,9 @@
 package com.smileflower.santa.flag.service;
 
-import com.amazonaws.services.kms.model.NotFoundException;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.smileflower.santa.flag.repository.FlagRepository;
 import com.smileflower.santa.flag.model.UploadImageResponse;
-import com.smileflower.santa.profile.service.S3Service;
+import com.smileflower.santa.utils.S3Service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

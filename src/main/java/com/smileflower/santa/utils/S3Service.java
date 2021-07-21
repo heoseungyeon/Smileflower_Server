@@ -1,10 +1,9 @@
-package com.smileflower.santa.profile.service;
+package com.smileflower.santa.utils;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.smileflower.santa.profile.model.dto.S3Component;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;

@@ -1,4 +1,4 @@
-package com.smileflower.santa.profile.model.dto;
+package com.smileflower.santa.utils;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

@@ -186,4 +186,10 @@ public class MountainDao {
                 "                group by f.userIdx\n" +
                 "                order by ranking)a where userIdx=?)",int.class,mountainIdx,userIdx);
     }
+
+    public int updateMountainImg(String name,String imageUrl) {
+        String query = "update mountain set imageUrl = ? where name = ?";
+        Object[] params = new Object[]{imageUrl, name};
+        return this.jdbcTemplate.update(query,params);
+    }
 }
