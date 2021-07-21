@@ -48,10 +48,13 @@ public class MountainProvider {
             throw new BaseException(NON_EXIST_MOUNTAIN);
         }
     }
-    public GetMapRes getMap(int userIdx,int mountainIdx) throws BaseException {
-
+    public GetMapRoadRes getMap(int userIdx,int mountainIdx) throws BaseException {
+        List<GetRoadRes> getRoadRes = mountainDao.getRoad(mountainIdx);
         GetMapRes getMapRes = mountainDao.getMap(mountainIdx);
-        return getMapRes;
+        GetMapRoadRes getMapRoadRes = new GetMapRoadRes();
+        getMapRoadRes.setRoad(getRoadRes);
+        getMapRoadRes.setMountain(getMapRes);
+        return getMapRoadRes;
 
     }
 

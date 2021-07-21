@@ -93,15 +93,15 @@ public class MountainController {
     }
 
     @GetMapping("/{mountainIdx}/map")
-    public BaseResponse<GetMapRes> getMap(@PathVariable("mountainIdx") int mountainIdx) throws BaseException{
+    public BaseResponse<GetMapRoadRes> getMap(@PathVariable("mountainIdx") int mountainIdx) throws BaseException{
         try{
             if(jwtService.getJwt()==null){
                 return new BaseResponse<>(EMPTY_JWT);
             }
             else{
                 int userIdx=jwtService.getUserIdx();
-                GetMapRes getMapRes = mountainProvider.getMap(userIdx,mountainIdx);
-                return new BaseResponse<>(getMapRes);
+                GetMapRoadRes getMapRoadRes = mountainProvider.getMap(userIdx,mountainIdx);
+                return new BaseResponse<>(getMapRoadRes);
             }
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
