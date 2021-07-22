@@ -134,6 +134,18 @@ public class ProfileJdbcRepository implements ProfileRepository {
     }
 
     @Override
+    public int findDiffFlagCountByIdx(int userIdx) {
+        return this.jdbcTemplate.queryForObject("SELECT COUNT(A.mountainIdx) AS cnt FROM (SELECT DISTINCT mountainIdx FROM flag WHERE userIdx = ?) A",new Object[]{userIdx}, Integer.class);
+    }
+
+    @Override
+    public int findHighSumByIdx(int userIdx) {
+        return this.jdbcTemplate.queryForObject("SELECT SUM(c.high) FROM (SELECT b.high FROM flag a INNER JOIN mountain b ON a.mountainIdx = b.mountainIdx WHERE a.userIdx = ?) c",new Object[]{userIdx}, Integer.class);
+    }
+
+
+
+    @Override
     public boolean deleteFlagByIdx(Long flagIdx) {
         String query = "delete from flag where flagIdx = ?";
         Object[] params = new Object[]{flagIdx};

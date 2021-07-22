@@ -21,10 +21,16 @@ public interface ProfileRepository {
     List<Picture> findPicturesByIdx(int userIdx);
 
     List<FlagsForMapResponse> findFlagsForMapByIdx(int userIdx);
+
+    int findDiffFlagCountByIdx(int userIdx);
+
     //정복 횟수
     int findFlagCountByIdx(int userIdx);
     //사진 올리기
     int createPicture(int userIdx,String imageUrl);
+
+    int findHighSumByIdx(int userIdx);
+
     //게시물 삭제
     boolean deleteFlagByIdx(Long flagIdx);
     boolean deletePictureByIdx(Long flagIdx);

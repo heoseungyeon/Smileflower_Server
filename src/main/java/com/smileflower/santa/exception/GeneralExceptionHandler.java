@@ -81,13 +81,13 @@ public class GeneralExceptionHandler {
     }
 
     // ========== HTTP 401 오류 처리 ==========
-    //데이터 없을 때 디비에
-    @ExceptionHandler({EmptyResultDataAccessException.class})
+    //데이터 없을 때 디비에-1
+    @ExceptionHandler({EmptyResultDataAccessException.class,NullPointerException.class})
     private ResponseEntity<?> emptyResultDataAccessException(Exception e) {
         return newResponse(e, HttpStatus.BAD_REQUEST);
     }
     // ========== HTTP 401 오류 처리 ==========
-    //데이터 없을 때 디비에
+    //데이터 없을 때 디비에-2
     @ExceptionHandler({NotFoundException.class})
     private ResponseEntity<?> notFoundException(Exception e) {
         return newResponse(e, HttpStatus.UNAUTHORIZED);
