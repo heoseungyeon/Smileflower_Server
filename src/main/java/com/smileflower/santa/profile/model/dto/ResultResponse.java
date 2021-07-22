@@ -12,8 +12,9 @@ public class ResultResponse {
     private boolean isThirdMountain;
     private boolean isSeventhMountain;
     private boolean isTenthMountain;
+    private int high;
 
-    public ResultResponse(boolean isFirstFlag, boolean isThirdFlag, boolean isSeventhFlag, boolean isTenthFlag, boolean isFiveHigh, boolean isTenHigh, boolean isTwentyHigh, boolean isMaster, boolean isThirdMountain, boolean isSeventhMountain, boolean isTenthMountain) {
+    public ResultResponse(boolean isFirstFlag, boolean isThirdFlag, boolean isSeventhFlag, boolean isTenthFlag, boolean isFiveHigh, boolean isTenHigh, boolean isTwentyHigh, boolean isMaster, boolean isThirdMountain, boolean isSeventhMountain, boolean isTenthMountain,int high) {
         this.isFirstFlag = isFirstFlag;
         this.isThirdFlag = isThirdFlag;
         this.isSeventhFlag = isSeventhFlag;
@@ -25,6 +26,7 @@ public class ResultResponse {
         this.isThirdMountain = isThirdMountain;
         this.isSeventhMountain = isSeventhMountain;
         this.isTenthMountain = isTenthMountain;
+        this.high = high;
     }
 
     public boolean isFirstFlag() {
@@ -113,6 +115,14 @@ public class ResultResponse {
 
     public void setTenthMountain(boolean tenthMountain) {
         isTenthMountain = tenthMountain;
+    }
+
+    public int getHigh() {
+        return high;
+    }
+
+    public void setHigh(int high) {
+        this.high = high;
     }
 }
 
