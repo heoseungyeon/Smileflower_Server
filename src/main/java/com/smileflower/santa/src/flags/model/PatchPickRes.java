@@ -1,4 +1,4 @@
-package com.smileflower.santa.src.flag.model;
+package com.smileflower.santa.src.flags.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

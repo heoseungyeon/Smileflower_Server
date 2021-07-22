@@ -2,18 +2,14 @@ package com.smileflower.santa.src.mountain;
 
 
 import com.smileflower.santa.config.BaseException;
-import com.smileflower.santa.config.secret.Secret;
 import com.smileflower.santa.src.mountain.model.*;
-import com.smileflower.santa.utils.AES128;
 import com.smileflower.santa.utils.JwtService;
+import com.smileflower.santa.utils.S3Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 import static com.smileflower.santa.config.BaseResponseStatus.*;
@@ -25,23 +21,30 @@ public class MountainProvider {
 
     private final MountainDao mountainDao;
     private final JwtService jwtService;
+    private final S3Service s3Service;
 
     private JdbcTemplate jdbcTemplate;
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public MountainProvider(MountainDao mountainDao, JwtService jwtService) {
+    public MountainProvider(MountainDao mountainDao, JwtService jwtService, S3Service s3Service) {
 
         this.mountainDao = mountainDao;
         this.jwtService = jwtService;
+        this.s3Service = s3Service;
     }
 
     public List<GetMountainRes> getMountain(int userIdx) throws BaseException {
         List<GetMountainRes> getMountainRes = mountainDao.getMountain(userIdx);
+        for(int i=0;i<getMountainRes.size();i++){
+            if(getMountainRes.get(i).getMountainImg()!=null)
+                getMountainRes.get(i).setMountainImg(s3Service.getFileUrl(getMountainRes.get(i).getMountainImg()));
+        }
         return getMountainRes;
     }
     public GetMountainIdxRes getMountainIdx(int userIdx,String mountain) throws BaseException {
         if(mountainDao.checkMountain(mountain)==1){
             GetMountainIdxRes getMountainIdxRes = mountainDao.getMountainIdx(mountain);
+
             return getMountainIdxRes;
         }else{
             throw new BaseException(NON_EXIST_MOUNTAIN);
@@ -79,6 +82,9 @@ public class MountainProvider {
         GetInfoPage getInfoPage = new GetInfoPage();
 
         GetInfoRes getInfoRes = mountainDao.getInfo(userIdx,mountainIdx);
+        if(getInfoRes.getMountainImg()!=null)
+            getInfoRes.setMountainImg(s3Service.getFileUrl(getInfoRes.getMountainImg()));
+
         getInfoPage.setInfo(getInfoRes);
 
         getInfoPage.setRoad(getRoadRes);

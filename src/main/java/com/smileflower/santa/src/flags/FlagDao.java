@@ -1,7 +1,7 @@
-package com.smileflower.santa.src.flag;
+package com.smileflower.santa.src.flags;
 
 
-import com.smileflower.santa.src.flag.model.*;
+import com.smileflower.santa.src.flags.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -25,13 +25,13 @@ public class FlagDao {
     public int checkMountainIdx(String mountain){
         return this.jdbcTemplate.queryForObject("select mountainIdx from mountain where name = ?",int.class,mountain);
     }
-    public int createFlag(PostFlagPictureReq postFlagPictureReq,int mountainIdx,int userIdx){
+    public int createFlag(PostFlagPictureReq postFlagPictureReq, int mountainIdx, int userIdx){
         this.jdbcTemplate.update("insert into flag (userIdx,mountainIdx,pictureUrl) Values (?,?,?)",
                 userIdx,mountainIdx,postFlagPictureReq.getPictureUrl()
         );
         return this.jdbcTemplate.queryForObject("select last_insert_id()",int.class);
     }
-    public int createHard(PostFlagHardReq postFlagHardReq,int mountainIdx,int userIdx){
+    public int createHard(PostFlagHardReq postFlagHardReq, int mountainIdx, int userIdx){
         this.jdbcTemplate.update("insert into difficulty (userIdx,mountainIdx,difficulty) Values (?,?,?)",
                 userIdx,mountainIdx,postFlagHardReq.getDifficulty()
         );
@@ -46,7 +46,7 @@ public class FlagDao {
         return this.jdbcTemplate.queryForObject("select status from picklist \n" +
                 "where mountainIdx =? and userIdx=?", char.class,mountainIdx,userIdx);
     }
-    public PatchPickRes patchPick(String status,int userIdx,int mountainIdx){
+    public PatchPickRes patchPick(String status, int userIdx, int mountainIdx){
         this.jdbcTemplate.update("UPDATE picklist set status=? \n" +
                         "where userIdx=? and mountainIdx=?",
                 status,userIdx,mountainIdx);

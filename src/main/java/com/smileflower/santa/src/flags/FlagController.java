@@ -1,11 +1,11 @@
-package com.smileflower.santa.src.flag;
+package com.smileflower.santa.src.flags;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.smileflower.santa.config.BaseException;
 import com.smileflower.santa.config.BaseResponse;
-import com.smileflower.santa.src.flag.model.*;
+import com.smileflower.santa.src.flags.model.*;
 import com.smileflower.santa.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

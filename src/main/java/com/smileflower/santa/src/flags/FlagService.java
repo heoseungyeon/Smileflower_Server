@@ -1,11 +1,11 @@
-package com.smileflower.santa.src.flag;
+package com.smileflower.santa.src.flags;
 
 
 import com.smileflower.santa.config.BaseException;
 import com.smileflower.santa.config.secret.Secret;
-import com.smileflower.santa.src.flag.model.*;
-import com.smileflower.santa.src.flag.FlagDao;
-import com.smileflower.santa.src.flag.FlagProvider;
+import com.smileflower.santa.src.flags.model.*;
+import com.smileflower.santa.src.flags.FlagDao;
+import com.smileflower.santa.src.flags.FlagProvider;
 import com.smileflower.santa.utils.AES128;
 import com.smileflower.santa.utils.JwtService;
 import org.slf4j.Logger;
