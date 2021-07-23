@@ -153,17 +153,18 @@ public class FlagDao {
 
     public List<GetPickRes> getPick(int userIdx) {
         return this.jdbcTemplate.query("select m.mountainIdx,\n" +
-                        "       m.name as mountainName,\n" +
-                        "       m.imageUrl as mountainImg,\n" +
-                        "       concat('(',m.high,'m)') as high,\n" +
-                        "       (select round(avg(d.difficulty))\n" +
-                        "        from difficulty\n" +
-                        "                 inner join difficulty d on m.mountainIdx = d.mountainIdx\n" +
-                        "       where m.mountainIdx = d.mountainIdx) as difficulty\n" +
-                        "from picklist\n" +
-                        "         inner join mountain m on picklist.mountainIdx = m.mountainIdx\n" +
-                        "where picklist.userIdx = ?\n" +
-                        "  and picklist.status = 'T';",
+                        "                       m.name as mountainName,\n" +
+                        "                       m.imageUrl as mountainImg,\n" +
+                        "                       concat('(',m.high,'m)') as high,\n" +
+                        "                       case when m.high<500 then 1\n" +
+                        "                                           when m.high<800  then 2\n" +
+                        "                                           when m.high<1000 then 3\n" +
+                        "                                           when m.high<1300 then 4\n" +
+                        "                                           else 5 end as difficulty\n" +
+                        "                from picklist\n" +
+                        "                         inner join mountain m on picklist.mountainIdx = m.mountainIdx\n" +
+                        "                where picklist.userIdx = ?\n" +
+                        "                  and picklist.status = 'T';",
                 (rs, rowNum) -> new GetPickRes(
                         rs.getInt("mountainIdx"),
                         rs.getString("mountainName"),

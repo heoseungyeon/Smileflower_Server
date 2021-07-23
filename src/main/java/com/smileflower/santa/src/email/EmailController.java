@@ -42,7 +42,7 @@ public class EmailController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
-    
+
     @PostMapping("/code")
     public BaseResponse<String> emailAuth(@RequestBody PostEmailReq postEmailReq) {
         if(postEmailReq.getEmail() == null){
