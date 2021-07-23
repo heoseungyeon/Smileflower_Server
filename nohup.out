@@ -17122,3 +17122,124 @@ HEAP Size(M) : 65 MB
 18:44:28.989 WARN  [File:AmazonS3Client.java] [Func:getInputStream] [Line:1903] [Message:No content length specified for stream data.  Stream contents will be buffered in memory and could result in out of memory errors.]- No content length specified for stream data.  Stream contents will be buffered in memory and could result in out of memory errors.
 19:01:04.190 WARN  [File:AmazonS3Client.java] [Func:getInputStream] [Line:1903] [Message:No content length specified for stream data.  Stream contents will be buffered in memory and could result in out of memory errors.]- No content length specified for stream data.  Stream contents will be buffered in memory and could result in out of memory errors.
 19:16:29.936 WARN  [File:AmazonS3Client.java] [Func:getInputStream] [Line:1903] [Message:No content length specified for stream data.  Stream contents will be buffered in memory and could result in out of memory errors.]- No content length specified for stream data.  Stream contents will be buffered in memory and could result in out of memory errors.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.3.8.RELEASE)
+
+13:31:16.468 INFO  [File:RepositoryConfigurationDelegate.java] [Func:registerRepositoriesIn] [Line:127] [Message:Bootstrapping Spring Data JPA repositories in DEFAULT mode.]- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:31:16.558 INFO  [File:RepositoryConfigurationDelegate.java] [Func:registerRepositoriesIn] [Line:187] [Message:Finished Spring Data repository scanning in 54ms. Found 0 JPA repository interfaces.]- Finished Spring Data repository scanning in 54ms. Found 0 JPA repository interfaces.
+13:31:17.842 INFO  [File:GenericScope.java] [Func:setSerializationId] [Line:295] [Message:BeanFactory id=f53eba3b-bcac-3c1b-bad1-85bf7f12fc63]- BeanFactory id=f53eba3b-bcac-3c1b-bad1-85bf7f12fc63
+13:31:19.649 INFO  [File:PostProcessorRegistrationDelegate.java] [Func:postProcessAfterInitialization] [Line:335] [Message:Bean 'com.smileflower.santa.apple.utils.AppleClient' of type [org.springframework.cloud.openfeign.FeignClientFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)]- Bean 'com.smileflower.santa.apple.utils.AppleClient' of type [org.springframework.cloud.openfeign.FeignClientFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+13:31:19.666 WARN  [File:EC2MetadataUtils.java] [Func:getItems] [Line:409] [Message:Unable to retrieve the requested metadata (/latest/user-data/). The requested metadata is not found at http://169.254.169.254/latest/user-data/]- Unable to retrieve the requested metadata (/latest/user-data/). The requested metadata is not found at http://169.254.169.254/latest/user-data/
+com.amazonaws.SdkClientException: The requested metadata is not found at http://169.254.169.254/latest/user-data/
+	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:89)
+	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:70)
+	at com.amazonaws.internal.InstanceMetadataServiceResourceFetcher.readResource(InstanceMetadataServiceResourceFetcher.java:75)
+	at com.amazonaws.internal.EC2ResourceFetcher.readResource(EC2ResourceFetcher.java:66)
+	at com.amazonaws.util.EC2MetadataUtils.getItems(EC2MetadataUtils.java:402)
+	at com.amazonaws.util.EC2MetadataUtils.getData(EC2MetadataUtils.java:371)
+	at com.amazonaws.util.EC2MetadataUtils.getData(EC2MetadataUtils.java:367)
+	at com.amazonaws.util.EC2MetadataUtils.getUserData(EC2MetadataUtils.java:363)
+	at org.springframework.cloud.aws.core.env.ec2.AmazonEc2InstanceDataPropertySource.getUserData(AmazonEc2InstanceDataPropertySource.java:123)
+	at org.springframework.cloud.aws.core.env.ec2.AmazonEc2InstanceDataPropertySource.getProperty(AmazonEc2InstanceDataPropertySource.java:95)
+	at org.springframework.boot.context.properties.source.SpringConfigurationPropertySource.getConfigurationProperty(SpringConfigurationPropertySource.java:84)
+	at org.springframework.boot.context.properties.source.SpringIterableConfigurationPropertySource.getConfigurationProperty(SpringIterableConfigurationPropertySource.java:100)
+	at org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource.findConfigurationProperty(ConfigurationPropertySourcesPropertySource.java:65)
+	at org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource.findConfigurationProperty(ConfigurationPropertySourcesPropertySource.java:53)
+	at org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource.getProperty(ConfigurationPropertySourcesPropertySource.java:42)
+	at org.springframework.core.env.PropertySourcesPropertyResolver.getProperty(PropertySourcesPropertyResolver.java:85)
+	at org.springframework.core.env.PropertySourcesPropertyResolver.getProperty(PropertySourcesPropertyResolver.java:68)
+	at org.springframework.core.env.AbstractPropertyResolver.getProperty(AbstractPropertyResolver.java:175)
+	at org.springframework.core.env.AbstractEnvironment.getProperty(AbstractEnvironment.java:551)
+	at org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration.persistenceExceptionTranslationPostProcessor(PersistenceExceptionTranslationAutoConfiguration.java:47)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:652)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:637)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1336)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1176)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:229)
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:723)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:536)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:405)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at com.smileflower.santa.SantaApplication.main(SantaApplication.java:12)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:107)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.WarLauncher.main(WarLauncher.java:59)
+13:31:20.578 INFO  [File:TomcatWebServer.java] [Func:initialize] [Line:108] [Message:Tomcat initialized with port(s): 8080 (http)]- Tomcat initialized with port(s): 8080 (http)
+13:31:20.612 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Initializing ProtocolHandler ["http-nio-8080"]]- Initializing ProtocolHandler ["http-nio-8080"]
+13:31:20.613 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Starting service [Tomcat]]- Starting service [Tomcat]
+13:31:20.613 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Starting Servlet engine: [Apache Tomcat/9.0.41]]- Starting Servlet engine: [Apache Tomcat/9.0.41]
+13:31:24.093 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Initializing Spring embedded WebApplicationContext]- Initializing Spring embedded WebApplicationContext
+13:31:24.093 INFO  [File:ServletWebServerApplicationContext.java] [Func:prepareWebApplicationContext] [Line:285] [Message:Root WebApplicationContext: initialization completed in 9853 ms]- Root WebApplicationContext: initialization completed in 9853 ms
+13:31:24.845 INFO  [File:HikariDataSource.java] [Func:getConnection] [Line:110] [Message:HikariPool-1 - Starting...]- HikariPool-1 - Starting...
+13:31:25.533 INFO  [File:HikariDataSource.java] [Func:getConnection] [Line:123] [Message:HikariPool-1 - Start completed.]- HikariPool-1 - Start completed.
+13:31:25.733 INFO  [File:LogHelper.java] [Func:logPersistenceUnitInformation] [Line:31] [Message:HHH000204: Processing PersistenceUnitInfo [name: default]]- HHH000204: Processing PersistenceUnitInfo [name: default]
+13:31:26.033 INFO  [File:Version.java] [Func:logVersion] [Line:44] [Message:HHH000412: Hibernate ORM core version 5.4.27.Final]- HHH000412: Hibernate ORM core version 5.4.27.Final
+13:31:26.478 INFO  [File:JavaReflectionManager.java] [Func:<clinit>] [Line:56] [Message:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}]- HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+13:31:26.892 INFO  [File:Dialect.java] [Func:<init>] [Line:175] [Message:HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect]- HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+13:31:27.452 INFO  [File:JtaPlatformInitiator.java] [Func:initiateService] [Line:52] [Message:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]]- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+13:31:27.477 INFO  [File:AbstractEntityManagerFactoryBean.java] [Func:buildNativeEntityManagerFactory] [Line:419] [Message:Initialized JPA EntityManagerFactory for persistence unit 'default']- Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:31:27.866 WARN  [File:JpaBaseConfiguration.java] [Func:openEntityManagerInViewInterceptor] [Line:220] [Message:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning]- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+13:31:29.185 INFO  [File:UserDetailsServiceAutoConfiguration.java] [Func:getOrDeducePassword] [Line:86] [Message:
+
+Using generated security password: 80f58b60-2eb2-4244-91c0-36bb469e9df8
+]- 
+
+Using generated security password: 80f58b60-2eb2-4244-91c0-36bb469e9df8
+
+13:31:29.403 INFO  [File:DefaultSecurityFilterChain.java] [Func:<init>] [Line:43] [Message:Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4f2d014a, org.springframework.security.web.context.SecurityContextPersistenceFilter@5af64ce0, org.springframework.security.web.header.HeaderWriterFilter@39de9bda, org.springframework.security.web.authentication.logout.LogoutFilter@14c141c0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@17229821, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6f5e16cf, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@51fc862e, org.springframework.security.web.session.SessionManagementFilter@7d528cf7, org.springframework.security.web.access.ExceptionTranslationFilter@1ff15a50]]- Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4f2d014a, org.springframework.security.web.context.SecurityContextPersistenceFilter@5af64ce0, org.springframework.security.web.header.HeaderWriterFilter@39de9bda, org.springframework.security.web.authentication.logout.LogoutFilter@14c141c0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@17229821, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6f5e16cf, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@51fc862e, org.springframework.security.web.session.SessionManagementFilter@7d528cf7, org.springframework.security.web.access.ExceptionTranslationFilter@1ff15a50]
+13:31:29.448 WARN  [File:ArchaiusAutoConfiguration.java] [Func:configureArchaius] [Line:123] [Message:No spring.application.name found, defaulting to 'application']- No spring.application.name found, defaulting to 'application'
+13:31:29.458 WARN  [File:URLConfigurationSource.java] [Func:<init>] [Line:121] [Message:No URLs will be polled as dynamic configuration sources.]- No URLs will be polled as dynamic configuration sources.
+13:31:29.462 INFO  [File:URLConfigurationSource.java] [Func:<init>] [Line:122] [Message:To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.]- To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+13:31:29.476 WARN  [File:URLConfigurationSource.java] [Func:<init>] [Line:121] [Message:No URLs will be polled as dynamic configuration sources.]- No URLs will be polled as dynamic configuration sources.
+13:31:29.476 INFO  [File:URLConfigurationSource.java] [Func:<init>] [Line:122] [Message:To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.]- To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+13:31:29.929 INFO  [File:ExecutorConfigurationSupport.java] [Func:initialize] [Line:181] [Message:Initializing ExecutorService 'applicationTaskExecutor']- Initializing ExecutorService 'applicationTaskExecutor'
+13:31:30.216 INFO  [File:WelcomePageHandlerMapping.java] [Func:<init>] [Line:57] [Message:Adding welcome page template: index]- Adding welcome page template: index
+13:31:30.793 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Starting ProtocolHandler ["http-nio-8080"]]- Starting ProtocolHandler ["http-nio-8080"]
+13:31:30.882 INFO  [File:TomcatWebServer.java] [Func:start] [Line:220] [Message:Tomcat started on port(s): 8080 (http) with context path '']- Tomcat started on port(s): 8080 (http) with context path ''
+HEAP Size(M) : 65 MB
+13:34:11.866 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Initializing Spring DispatcherServlet 'dispatcherServlet']- Initializing Spring DispatcherServlet 'dispatcherServlet'
+13:34:11.867 INFO  [File:FrameworkServlet.java] [Func:initServletBean] [Line:525] [Message:Initializing Servlet 'dispatcherServlet']- Initializing Servlet 'dispatcherServlet'
+13:34:11.891 INFO  [File:FrameworkServlet.java] [Func:initServletBean] [Line:547] [Message:Completed initialization in 24 ms]- Completed initialization in 24 ms
+13:35:25.569 WARN  [File:AbstractHandlerExceptionResolver.java] [Func:logException] [Line:199] [Message:Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' not supported]]- Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' not supported]
+13:40:31.588 WARN  [File:EmailProvider.java] [Func:checkAuth] [Line:39] [Message:Invalid Authentic email = 12161181@inha.edu]- Invalid Authentic email = 12161181@inha.edu
+13:42:03.780 WARN  [File:EmailController.java] [Func:verifyCode] [Line:61] [Message:Resend email = 12161181@inha.edu]- Resend email = 12161181@inha.edu
+13:42:07.264 WARN  [File:EmailController.java] [Func:verifyCode] [Line:63] [Message:Complete resend email = 12161181@inha.edu]- Complete resend email = 12161181@inha.edu
+13:42:50.470 WARN  [File:EmailProvider.java] [Func:checkAuth] [Line:39] [Message:Invalid Authentic email = 12161181@inha.edu]- Invalid Authentic email = 12161181@inha.edu
+13:43:00.427 WARN  [File:EmailProvider.java] [Func:checkAuth] [Line:39] [Message:Invalid Authentic email = 12161181@inha.edu]- Invalid Authentic email = 12161181@inha.edu
+13:43:04.155 WARN  [File:EmailProvider.java] [Func:checkAuth] [Line:39] [Message:Invalid Authentic email = 12161181@inha.edu]- Invalid Authentic email = 12161181@inha.edu
+13:43:33.354 WARN  [File:AbstractHandlerExceptionResolver.java] [Func:logException] [Line:199] [Message:Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Invalid numeric value: Leading zeroes not allowed; nested exception is com.fasterxml.jackson.core.JsonParseException: Invalid numeric value: Leading zeroes not allowed
+ at [Source: (PushbackInputStream); line: 3, column: 15]]]- Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Invalid numeric value: Leading zeroes not allowed; nested exception is com.fasterxml.jackson.core.JsonParseException: Invalid numeric value: Leading zeroes not allowed
+ at [Source: (PushbackInputStream); line: 3, column: 15]]
+13:43:39.084 WARN  [File:EmailProvider.java] [Func:checkAuth] [Line:39] [Message:Invalid Authentic email = 12161181@inha.edu]- Invalid Authentic email = 12161181@inha.edu
+13:43:40.037 WARN  [File:EmailProvider.java] [Func:checkAuth] [Line:39] [Message:Invalid Authentic email = 12161181@inha.edu]- Invalid Authentic email = 12161181@inha.edu
+13:43:54.332 WARN  [File:EmailProvider.java] [Func:checkAuth] [Line:39] [Message:Invalid Authentic email = 12161181@inha.edu]- Invalid Authentic email = 12161181@inha.edu
+13:44:21.922 WARN  [File:EmailController.java] [Func:verifyCode] [Line:61] [Message:Resend email = 12161181@inha.edu]- Resend email = 12161181@inha.edu
+13:44:25.849 WARN  [File:EmailController.java] [Func:verifyCode] [Line:63] [Message:Complete resend email = 12161181@inha.edu]- Complete resend email = 12161181@inha.edu
+13:45:05.990 WARN  [File:EmailProvider.java] [Func:checkAuth] [Line:39] [Message:Invalid Authentic email = 12161181@inha.edu]- Invalid Authentic email = 12161181@inha.edu

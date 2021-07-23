@@ -44,7 +44,6 @@ out/
 ### VS Code ###
 .vscode/
 .DS_Store
-src/main/resources
 logs/
 gradle/
 nohup.out

@@ -37,6 +37,13 @@ public enum BaseResponseStatus {
     INSUFFICIENT_NAME_RANGE(false,2022,"별명을 2~15자 내로 입력해주세요."),
     USERS_INVALID_ACCESS(false,2023,"본인만 접근 가능합니다."),
     NON_EXIST_MOUNTAIN(false,2024,"해당 산이 없습니다."),
+    POST_AUTH_EMPTY_CODE(false, 2025, "인증코드를 입력해주세요."),
+    POST_AUTH_EMPTY_EMAIL(false, 2026, "인증코드를 보낸 이메일이 없습니다."),
+    POST_AUTH_EXISTS_EMAIL(false, 2027, "이미 회원가입이 완료된 이메일입니다."),
+    INVALID_AUTH_EMAIL_CODE(false, 2028, "인증코드가 틀렸습니다."),
+    SEND_MAIL_ERROR(false, 2029, "인증코드 전송에 실패하였습니다."),
+    POST_USERS_EMPTY_USER(false, 2030, "산타에 가입되어있지 않습니다."),
+
 
 
 
