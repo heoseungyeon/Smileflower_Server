@@ -17455,3 +17455,6 @@ Using generated security password: d67ef677-17d8-42ee-94ae-f705a4a393bd
 20:03:17.535 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Starting ProtocolHandler ["http-nio-8080"]]- Starting ProtocolHandler ["http-nio-8080"]
 20:03:17.593 INFO  [File:TomcatWebServer.java] [Func:start] [Line:220] [Message:Tomcat started on port(s): 8080 (http) with context path '']- Tomcat started on port(s): 8080 (http) with context path ''
 HEAP Size(M) : 66 MB
+20:10:02.225 INFO  [File:DirectJDKLog.java] [Func:log] [Line:173] [Message:Initializing Spring DispatcherServlet 'dispatcherServlet']- Initializing Spring DispatcherServlet 'dispatcherServlet'
+20:10:02.226 INFO  [File:FrameworkServlet.java] [Func:initServletBean] [Line:525] [Message:Initializing Servlet 'dispatcherServlet']- Initializing Servlet 'dispatcherServlet'
+20:10:02.249 INFO  [File:FrameworkServlet.java] [Func:initServletBean] [Line:547] [Message:Completed initialization in 23 ms]- Completed initialization in 23 ms

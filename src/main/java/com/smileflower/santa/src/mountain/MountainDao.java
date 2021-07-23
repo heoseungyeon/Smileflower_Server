@@ -63,15 +63,15 @@ public class MountainDao {
     public List<GetRoadRes> getRoad(int mountainIdx){
         return this.jdbcTemplate.query("select roadIdx,\n" +
                         "\n" +
-                        "       concat(roadIdx,'코스')              as courseNum,\n" +
-                        "       road.difficulty,\n" +
-                        "       concat(road.length, 'km') as length,\n" +
-                        "       road.time as time ,\n" +
-                        "       course,\n" +
-                        "       road.latitude,\n" +
-                        "       road.longitude\n" +
-                        "from road\n" +
-                        "where mountainIdx = ?;",
+                        "                       concat(row_number() over (order by roadIdx),'코스')              as courseNum,\n" +
+                        "                       road.difficulty,\n" +
+                        "                       concat(road.length, 'km') as length,\n" +
+                        "                       road.time as time ,\n" +
+                        "                       course,\n" +
+                        "                       road.latitude,\n" +
+                        "                       road.longitude\n" +
+                        "                from road\n" +
+                        "                where mountainIdx = ?;",
                 (rs, rowNum) -> new GetRoadRes(
                         rs.getInt("roadIdx"),
                         rs.getString("courseNum"),
