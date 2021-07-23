@@ -151,7 +151,12 @@ public class ProfileService {
     }
 
     public List<FlagsForMapResponse> findFlagsForMap(int userIdx) {
-        return profileRepository.findFlagsForMapByIdx(userIdx);
+        List<FlagsForMapResponse> flagsForMapResponses = profileRepository.findFlagsForMapByIdx(userIdx);
+        for(int i=0;i<flagsForMapResponses.size();i++){
+            if(flagsForMapResponses.get(i).getImageUrl()!=null)
+                flagsForMapResponses.get(i).setImageUrl(s3Service.getFileUrl(flagsForMapResponses.get(i).getImageUrl()));
+        }
+        return flagsForMapResponses;
     }
 
     public DeleteFlagResponse deleteFlag(Long flagIdx) {
