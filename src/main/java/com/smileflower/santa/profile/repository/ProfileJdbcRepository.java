@@ -94,6 +94,7 @@ public class ProfileJdbcRepository implements ProfileRepository {
         List<FlagsForMapResponse> flags = this.jdbcTemplate.query(query,param,(rs,rowNum) -> new FlagsForMapResponse(
                 rs.getInt("userIdx"),
                 rs.getLong("mountainIdx"),
+                rs.getString("name"),
                 rs.getString("imageUrl"),
                 rs.getDouble("latitude"),
                 rs.getDouble("longitude"),

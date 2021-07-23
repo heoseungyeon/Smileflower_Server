@@ -3,15 +3,17 @@ package com.smileflower.santa.profile.model.dto;
 public class FlagsForMapResponse {
     private int userIdx;
     private Long mountainIdx;
+    private String mountainName;
     private String imageUrl;
     private double latitude;
     private double longitude;
     private int flagCount;
     private String address;
 
-    public FlagsForMapResponse(int userIdx, Long mountainIdx, String imageUrl, double latitude, double longitude, int flagCount,String address) {
+    public FlagsForMapResponse(int userIdx, Long mountainIdx,String mountainName, String imageUrl, double latitude, double longitude, int flagCount,String address) {
         this.userIdx = userIdx;
         this.mountainIdx = mountainIdx;
+        this.mountainName = mountainName;
         this.imageUrl = imageUrl;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -33,6 +35,14 @@ public class FlagsForMapResponse {
 
     public void setMountainIdx(Long mountainIdx) {
         this.mountainIdx = mountainIdx;
+    }
+
+    public String getMountainName() {
+        return mountainName;
+    }
+
+    public void setMountainName(String mountainName) {
+        this.mountainName = mountainName;
     }
 
     public String getImageUrl() {
