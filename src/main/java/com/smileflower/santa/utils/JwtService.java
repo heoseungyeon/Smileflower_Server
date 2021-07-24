@@ -4,6 +4,8 @@ package com.smileflower.santa.utils;
 import com.smileflower.santa.config.BaseException;
 import com.smileflower.santa.config.secret.Secret;
 import io.jsonwebtoken.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -15,7 +17,7 @@ import static com.smileflower.santa.config.BaseResponseStatus.*;
 
 @Service
 public class JwtService {
-
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
     /*
     JWT 생성
     @param userIdx
@@ -66,6 +68,31 @@ public class JwtService {
         // 3. userIdx 추출
         return claims.getBody().get("userIdx",Integer.class);
     }
+
+    public boolean validateToken() throws SecurityException,MalformedJwtException,ExpiredJwtException,UnsupportedJwtException,IllegalArgumentException {
+        //1. JWT 추출
+        String accessToken = getJwt();
+        try {
+            Jwts.parser().setSigningKey(Secret.JWT_SECRET_KEY).parseClaimsJws(accessToken);
+            return true;
+        } catch (SecurityException e) {
+            logger.info("잘못된 JWT 서명입니다.");
+            throw new SecurityException(e.getMessage());
+        } catch(MalformedJwtException e){
+            logger.info("잘못된 JWT 서명입니다.");
+            throw new MalformedJwtException(e.getMessage());
+        } catch(ExpiredJwtException e) {
+            logger.info("만료된 JWT 토큰입니다.");
+            throw new ExpiredJwtException(e.getHeader(),e.getClaims(), e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            logger.info("지원되지 않는 JWT 토큰입니다.");
+            throw new UnsupportedJwtException(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            logger.info("JWT 토큰이 잘못되었습니다.");
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
     public int getUserIdxV2(){
         //1. JWT 추출
         String accessToken = getJwt();
