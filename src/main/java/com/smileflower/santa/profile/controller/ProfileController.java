@@ -24,7 +24,10 @@ public class ProfileController {
 
     @PatchMapping("/upload")
     public ApiResult<UploadImageResponse> uploadImage(@RequestPart(required = false) MultipartFile file){
-        int userIdx = jwtService.getUserIdxV2();
+        int userIdx=-1;
+        if(jwtService.validateToken()){
+            userIdx = jwtService.getUserIdxV2();
+        }
         if(file != null){
             return ApiResult.OK(
                     profileService.uploadImage(file,userIdx)
@@ -38,7 +41,10 @@ public class ProfileController {
     }
     @GetMapping("/upload")
     public ApiResult<UploadImageResponse> uploadImage(){
-        int userIdx = jwtService.getUserIdxV2();
+        int userIdx=-1;
+        if(jwtService.validateToken()){
+            userIdx = jwtService.getUserIdxV2();
+        }
         return ApiResult.OK(
                 profileService.getUploadImage(userIdx)
         );
@@ -48,6 +54,7 @@ public class ProfileController {
 
     @GetMapping("/{userIdx}")
     public ApiResult<ProfileResponse> profile(@PathVariable("userIdx") int userIdx) {
+        jwtService.validateToken();
         return ApiResult.OK(
                 profileService.findProfile(userIdx)
         );
@@ -55,6 +62,7 @@ public class ProfileController {
 
     @GetMapping("/{userIdx}/posts")
     public ApiResult<PostsResponse> flags(@PathVariable("userIdx") int userIdx) {
+        jwtService.validateToken();
         return ApiResult.OK(
                 profileService.findPosts(userIdx)
         );
@@ -62,6 +70,7 @@ public class ProfileController {
 
     @GetMapping("/{userIdx}/result")
     public ApiResult<ResultResponse> result(@PathVariable("userIdx") int userIdx) {
+        jwtService.validateToken();
         return ApiResult.OK(
                 profileService.findResult(userIdx)
         );
@@ -69,6 +78,8 @@ public class ProfileController {
 
     @GetMapping("/{userIdx}/flags/map")
     public ApiResult<List<FlagsForMapResponse>> flagsForMap(@PathVariable("userIdx") int userIdx) {
+
+        jwtService.validateToken();
         return ApiResult.OK(
                 profileService.findFlagsForMap(userIdx)
         );
@@ -77,7 +88,7 @@ public class ProfileController {
 
     @DeleteMapping("/{userIdx}/flags/{flagIdx}")
     public ApiResult<DeleteFlagResponse> deleteFlag(@PathVariable("flagIdx") Long flagIdx) {
-        int userIdx = jwtService.getUserIdxV2();
+        jwtService.validateToken();
         return ApiResult.OK(
                 profileService.deleteFlag(flagIdx)
         );
@@ -86,7 +97,7 @@ public class ProfileController {
 
     @DeleteMapping("/{userIdx}/pictures/{pictureIdx}")
     public ApiResult<DeletePictureResponse> deletePicture(@PathVariable("pictureIdx") Long pictureIdx) {
-
+        jwtService.validateToken();
         return ApiResult.OK(
                 profileService.deletePicture(pictureIdx)
         );
@@ -95,7 +106,10 @@ public class ProfileController {
 
     @PostMapping("/picture")
     public ApiResult<CreatePictureResponse> createPicture(@RequestPart(required = false) MultipartFile file) {
-        int userIdx = jwtService.getUserIdxV2();
+        int userIdx=-1;
+        if(jwtService.validateToken()){
+            userIdx = jwtService.getUserIdxV2();
+        }
         return ApiResult.OK(
                 profileService.createPicture(userIdx,file)
         );
@@ -104,7 +118,7 @@ public class ProfileController {
 
     @PostMapping("/{userIdx}/flags/{flagIdx}/report")
     public ApiResult<ReportFlagResponse> reportFlag(@PathVariable("userIdx") int userIdx, @PathVariable("flagIdx") Long flagIdx) {
-
+        jwtService.validateToken();
         return ApiResult.OK(
                 profileService.reportFlag(userIdx,flagIdx)
         );

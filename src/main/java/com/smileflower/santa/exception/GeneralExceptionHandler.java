@@ -2,6 +2,8 @@ package com.smileflower.santa.exception;
 
 
 import com.amazonaws.services.kms.model.NotFoundException;
+import com.smileflower.santa.flag.controller.FlagsController;
+import com.smileflower.santa.profile.controller.ProfileController;
 import feign.FeignException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -19,13 +21,14 @@ import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import static com.smileflower.santa.exception.ApiResult.ERROR;
 
 
-@ControllerAdvice
+@ControllerAdvice(assignableTypes = {ProfileController.class, FlagsController.class})
 public class GeneralExceptionHandler {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -51,32 +54,38 @@ public class GeneralExceptionHandler {
     // ========== HTTP 405 오류 처리 ==========
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     private ResponseEntity<?> handleHHttpRequestMethodNotSupportedException(Exception e) {
+        log.debug("Bad request exception occurred: {}", e.getMessage(), e);
         return newResponse(e, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
     // ========== HTTP 401 오류 처리 ==========
     @ExceptionHandler({FeignException.class, ExpiredJwtException.class})
     private ResponseEntity<?> FeignException(Exception e) {
+        log.debug("Bad request exception occurred: {}", e.getMessage(), e);
         return newResponse(e, HttpStatus.UNAUTHORIZED);
     }
 
     // ========== HTTP 415 오류 처리 ==========
     @ExceptionHandler({HttpMediaTypeException.class})
     private ResponseEntity<?> handleHttpMediaTypeException(Exception e) {
+        log.debug("Bad request exception occurred: {}", e.getMessage(), e);
         return newResponse(e, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
     @ExceptionHandler({MultipartException.class, MissingServletRequestPartException.class})
     private ResponseEntity<?> multipartException(Exception e) {
+        log.debug("Bad request exception occurred: {}", e.getMessage(), e);
         return newResponse(e, HttpStatus.BAD_REQUEST);
     }
 
     // ========== HTTP 401 오류 처리 ==========
     @ExceptionHandler({MissingRequestHeaderException.class})
     private ResponseEntity<?> missingRequestHeaderException(Exception e) {
+        log.debug("Bad request exception occurred: {}", e.getMessage(), e);
         return newResponse(e, HttpStatus.UNAUTHORIZED);
     }
     // ========== HTTP 401 오류 처리 ==========
-    @ExceptionHandler({SignatureException.class,MalformedJwtException.class})
+    @ExceptionHandler({SignatureException.class,MalformedJwtException.class,SecurityException.class})
     private ResponseEntity<?> signatureAndMalformedJwtException(Exception e) {
+        log.debug("Bad request exception occurred: {}", e.getMessage(), e);
         return newResponse(e, HttpStatus.UNAUTHORIZED);
     }
 
@@ -84,12 +93,14 @@ public class GeneralExceptionHandler {
     //데이터 없을 때 디비에-1
     @ExceptionHandler({EmptyResultDataAccessException.class,NullPointerException.class})
     private ResponseEntity<?> emptyResultDataAccessException(Exception e) {
+        log.debug("Bad request exception occurred: {}", e.getMessage(), e);
         return newResponse(e, HttpStatus.BAD_REQUEST);
     }
     // ========== HTTP 401 오류 처리 ==========
     //데이터 없을 때 디비에-2
     @ExceptionHandler({NotFoundException.class})
     private ResponseEntity<?> notFoundException(Exception e) {
+        log.debug("Bad request exception occurred: {}", e.getMessage(), e);
         return newResponse(e, HttpStatus.UNAUTHORIZED);
     }
     // ========== HTTP 404 오류 처리 ==========

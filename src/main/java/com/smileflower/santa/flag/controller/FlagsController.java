@@ -25,11 +25,12 @@ public class FlagsController {
 
     @PostMapping("/upload/{mountainIdx}")
     public ApiResult<UploadImageResponse> uploadImage(@RequestPart(required = false) MultipartFile file, @PathVariable("mountainIdx") Long mountainIdx) {
-        int userIdx = jwtService.getUserIdxV2();
-
+        int userIdx=-1;
+        if(jwtService.validateToken()){
+            userIdx = jwtService.getUserIdxV2();
+        }
         return ApiResult.OK(
                 flagsService.uploadImage(file,userIdx, mountainIdx)
         );
-
     }
 }
