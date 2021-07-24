@@ -36,7 +36,7 @@ public class HomeDao {
                         "                from flag f\n" +
                         "                         left join mountain m on f.mountainIdx = m.mountainIdx\n" +
                         "                         left join user u on f.userIdx = u.userIdx\n" +
-                        "                where f.mountainIdx = 3\n" +
+                        "                where f.mountainIdx = ?\n" +
                         "                group by f.userIdx\n" +
                         "                order by flagCount desc\n" +
                         "                limit 1",

@@ -162,7 +162,7 @@ public class MountainDao {
                         "                   on a.mountainIdx = m.mountainIdx\n" +
                         "         left join (select mountainIdx, status from picklist where userIdx = ?) b on b.mountainIdx = m.mountainIdx\n" +
                         "\n" +
-                        "where m.mountainIdx = 12 group by m.mountainIdx\n" +
+                        "where m.mountainIdx = ? group by m.mountainIdx\n" +
                         "                                order by m.mountainIdx;",
                 (rs, rowNum) -> new GetInfoRes(
                         rs.getInt("mountainIdx"),
