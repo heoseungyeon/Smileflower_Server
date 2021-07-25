@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
+
 public class GetRankRes {
     private int ranking;
     private int userIdx;
@@ -14,4 +14,12 @@ public class GetRankRes {
     private String userImage;
     private int flagCount;
     private String agoTime;
+    public GetRankRes(int ranking,int userIdx,String userName,String userImage,int flagCount, String agoTime){
+        this.ranking=ranking;
+        this.userIdx=userIdx;
+        this.userName=userName;
+        this.userImage=userImage;
+        this.flagCount=flagCount;
+        this.agoTime= agoTime;
+    }
 }

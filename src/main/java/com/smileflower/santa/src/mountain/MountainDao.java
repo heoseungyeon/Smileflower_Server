@@ -59,6 +59,10 @@ public class MountainDao {
     public int checkMountain(String mountain){
         return this.jdbcTemplate.queryForObject("select exists(select mountainIdx from mountain where mountain.name=?)",int.class,mountain);
     }
+    public String checkUserImage(int userIdx){
+        return this.jdbcTemplate.queryForObject("" +
+                "select userImageUrl from SantaDB.user where userIdx=?",String.class,userIdx);
+    }
 
     public List<GetRoadRes> getRoad(int mountainIdx){
         return this.jdbcTemplate.query("select roadIdx,\n" +

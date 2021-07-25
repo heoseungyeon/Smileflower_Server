@@ -59,6 +59,10 @@ public class UserDao {
         return this.jdbcTemplate.queryForObject("select status from jwtmanagement where jwt=?",String.class,
                 jwt);
     }
+    public String getEmailId(int userIdx){
+        return this.jdbcTemplate.queryForObject("select emailId from user where userIdx=?",String.class,
+                userIdx);
+    }
 
 
     public String recordLog(int userIdx,String status){

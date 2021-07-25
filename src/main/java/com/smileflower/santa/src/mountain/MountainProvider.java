@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.smileflower.santa.config.BaseResponseStatus.*;
@@ -62,19 +63,34 @@ public class MountainProvider {
 
     public GetMountainRankRes getMountainRank(int userIdx,int mountainIdx) throws BaseException {
         List<GetRankRes> getRankRes = mountainDao.getRank(mountainIdx);
+        GetRankRes getDummy = new GetRankRes(0,0,"산타",null,0,"0일전");
         GetMountainRankRes getMountainRankRes = new GetMountainRankRes();
         if(mountainDao.checkMyRank(userIdx,mountainIdx)==1){
              GetRankRes getmyRankRes = mountainDao.getmyRank(userIdx,mountainIdx);
              getMountainRankRes.setMyRank(getmyRankRes);
         }
         getMountainRankRes.setAllRank(getRankRes);
-
+        if (getMountainRankRes.getAllRank().size()==0){
+            for (int i=0; i<3; i++){
+                getMountainRankRes.getAllRank().add(getDummy);
+            }
+        }else if (getMountainRankRes.getAllRank().size()==1){
+            for (int i=0;i<2;i++){
+                getMountainRankRes.getAllRank().add(getDummy);
+            }
+        }else if (getMountainRankRes.getAllRank().size()==2){
+            getMountainRankRes.getAllRank().add(getDummy);
+        }
         return getMountainRankRes;
 
     }
     public int checkMyRank(int userIdx,int mountainIdx){
         int exist = mountainDao.checkMyRank(userIdx,mountainIdx);
         return exist;
+    }
+    public String checkUserImage(int userIdx){
+        String userImage = mountainDao.checkUserImage(userIdx);
+        return userImage;
     }
 
     public GetInfoPage getMountainInfo(int userIdx,int mountainIdx) throws BaseException {

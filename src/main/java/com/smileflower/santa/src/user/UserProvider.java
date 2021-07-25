@@ -107,6 +107,7 @@ public class UserProvider {
         GetAutoRes getAutoRes = new GetAutoRes();
         getAutoRes.setStauts(userDao.getAuto(jwt));
         getAutoRes.setUserIdx(userIdx);
+        getAutoRes.setEmailId(userDao.getEmailId(userIdx));
         return getAutoRes;
     }
 
