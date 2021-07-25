@@ -195,7 +195,7 @@ public class ProfileService {
         int diffFlagCount = profileRepository.findDiffFlagCountByIdx(userIdx);
         int highCount = profileRepository.findHighSumByIdx(userIdx);
         return new ResultResponse(flagCount>0,flagCount>2,flagCount>6,flagCount>9,
-                highCount>49999, highCount>99999,highCount>199999,diffFlagCount>99,
+                highCount>4999, highCount>9999,highCount>19999,diffFlagCount>99,
                 diffFlagCount>2,diffFlagCount>6,diffFlagCount>9,(double)highCount/1000);
     }
 }

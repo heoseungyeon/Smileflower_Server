@@ -80,7 +80,10 @@ public class MountainService {
                 System.out.println("mountainName : " + mountainName);
                 String multiPartFileName = createFileName(multipartFile.getOriginalFilename());
                 System.out.println("multiPartFileName : " + multiPartFileName);
-
+                if(mountainDao.findMountainImgByName(mountainName)!=null) {
+                    s3Service.deleteFile(mountainDao.findMountainImgByName(mountainName));
+                    System.out.println("deleteFile : " + mountainName);
+                }
                 ObjectMetadata objectMetadata = new ObjectMetadata();
                 objectMetadata.setContentType(multipartFile.getContentType());
                 try (InputStream inputStream = multipartFile.getInputStream()) {

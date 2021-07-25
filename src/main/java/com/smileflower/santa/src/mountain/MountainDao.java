@@ -3,6 +3,7 @@ package com.smileflower.santa.src.mountain;
 
 import com.smileflower.santa.src.mountain.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -209,5 +210,15 @@ public class MountainDao {
         String query = "update mountain set imageUrl = ? where name = ?";
         Object[] params = new Object[]{imageUrl, name};
         return this.jdbcTemplate.update(query,params);
+    }
+
+    public String findMountainImgByName(String name) {
+        String query = "select imageUrl from mountain where name =?";
+        try {
+            return this.jdbcTemplate.queryForObject(query, new Object[]{name}, String.class);
+        }catch (EmptyResultDataAccessException e) {
+            // EmptyResultDataAccessException 예외 발생시 null 리턴
+            return null;
+            }
     }
 }
