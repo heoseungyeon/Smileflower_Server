@@ -68,6 +68,7 @@ public class HomeProvider {
             }
         }
         if (getmyflagMountainRes.getMountain().size()==0){
+            getHomeRes.setHomeStatus(homeStatus);
             GetHomeMountainRes getDummy = new GetHomeMountainRes(1,"관악산","https://smileflower-bucket.s3.ap-northeast-2.amazonaws.com/46a34a4a-9ebc-469e-ab7f-2a0d5c98a187.jpg",2,0,"산타",null,0);
             getmyflagMountainRes.getMountain().add(getDummy);
         }

@@ -63,7 +63,7 @@ public class MountainProvider {
 
     public GetMountainRankRes getMountainRank(int userIdx,int mountainIdx) throws BaseException {
         List<GetRankRes> getRankRes = mountainDao.getRank(mountainIdx);
-        GetRankRes getDummy = new GetRankRes(0,0,"산타",null,0,"0일전");
+        GetRankRes getDummy = new GetRankRes(0,0,"Lv0","산타",null,0,"0일전");
         GetMountainRankRes getMountainRankRes = new GetMountainRankRes();
         if(mountainDao.checkMyRank(userIdx,mountainIdx)==1){
              GetRankRes getmyRankRes = mountainDao.getmyRank(userIdx,mountainIdx);

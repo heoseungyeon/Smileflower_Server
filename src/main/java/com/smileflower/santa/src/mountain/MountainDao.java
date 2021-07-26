@@ -90,26 +90,33 @@ public class MountainDao {
     }
 
     public List<GetRankRes> getRank(int mountainIdx){
-        return this.jdbcTemplate.query("select row_number() over (order by COUNT(f.userIdx) desc, f.createdAt desc) as ranking,\n" +
-                        "                       f.userIdx,\n" +
-                        "                       u.name as userName,\n" +
-                        "                       u.userImageUrl   as userImage,\n" +
-                        "                       COUNT(f.userIdx) as flagCount\n" +
-                        "                      ,case\n" +
-                        "           when minute(timediff(now(), max(f.createdAt))) < 1 then concat(minute(timediff(now(), max(f.createdAt))), '분전')\n" +
-                        "           when hour(timediff(now(), max(f.createdAt))) < 24 then concat(hour(timediff(now(), max(f.createdAt))), '시간전')\n" +
-                        "           else concat(day(timediff(now(), max(f.createdAt))), '일전') end       agoTime\n" +
+        return this.jdbcTemplate.query("select *,case\n" +
+                        "                                         when a.flagCount > 0 and a.flagCount<2 then 'Lv1'\n" +
+                        "                                         when a.flagCount >= 2 and a.flagCount<4 then 'Lv2'\n" +
+                        "                                         when a.flagCount >= 4 and a.flagCount<6 then 'Lv3'\n" +
+                        "                                         when a.flagCount >= 6 and a.flagCount< 8 then 'Lv4'\n" +
+                        "                                         when a.flagCount >= 8 and a.flagCount<10 then 'Lv5'\n" +
+                        "                                         when a.flagCount >= 10 then 'Lv6'end               as level from (select row_number() over (order by COUNT(f.userIdx) desc, f.createdAt desc) as ranking,\n" +
+                        "                                               f.userIdx,\n" +
+                        "                                               u.name as userName,\n" +
+                        "                                               u.userImageUrl   as userImage,\n" +
+                        "                                               COUNT(f.userIdx) as flagCount,\n" +
+                        "      case\n" +
+                        "                                   when minute(timediff(now(), max(f.createdAt))) < 1 then concat(minute(timediff(now(), max(f.createdAt))), '분전')\n" +
+                        "                                   when hour(timediff(now(), max(f.createdAt))) < 24 then concat(hour(timediff(now(), max(f.createdAt))), '시간전')\n" +
+                        "                                   else concat(day(timediff(now(), max(f.createdAt))), '일전') end       agoTime\n" +
                         "\n" +
-                        "                from flag f\n" +
-                        "                         inner join mountain m on f.mountainIdx = m.mountainIdx\n" +
-                        "                         inner join user u on f.userIdx = u.userIdx\n" +
-                        "                where f.mountainIdx = ?" +
+                        "                                        from flag f\n" +
+                        "                                                 inner join mountain m on f.mountainIdx = m.mountainIdx\n" +
+                        "                                                 inner join user u on f.userIdx = u.userIdx\n" +
+                        "                                        where f.mountainIdx = ?\n" +
                         "\n" +
-                        "                group by f.userIdx\n" +
-                        "                order by ranking;",
+                        "                                        group by f.userIdx\n" +
+                        "                                        order by ranking)a",
                 (rs, rowNum) -> new GetRankRes(
                         rs.getInt("ranking"),
                         rs.getInt("userIdx"),
+                        rs.getString("level"),
                         rs.getString("userName"),
                         rs.getString("userImage"),
                         rs.getInt("flagCount"),
@@ -118,29 +125,39 @@ public class MountainDao {
     }
     public GetRankRes getmyRank(int userIdx, int mountainIdx){
         return this.jdbcTemplate.queryForObject("select * from (select row_number() over (order by COUNT(f.userIdx) desc, f.createdAt desc) as ranking,\n" +
-                        "                       f.userIdx,\n" +
-                        "                       u.name as userName,\n" +
-                        "                       u.userImageUrl   as userImage,\n" +
-                        "                       COUNT(f.userIdx) as flagCount\n" +
-                        "                      ,case\n" +
-                        "           when minute(timediff(now(), max(f.createdAt))) < 1 then concat(minute(timediff(now(), max(f.createdAt))), '분전')\n" +
-                        "           when hour(timediff(now(), max(f.createdAt))) < 24 then concat(hour(timediff(now(), max(f.createdAt))), '시간전')\n" +
-                        "           else concat(day(timediff(now(), max(f.createdAt))), '일전') end       agoTime\n" +
+                        "                                               f.userIdx,\n" +
+                        "                                               u.name as userName,\n" +
                         "\n" +
-                        "                from flag f\n" +
-                        "                         inner join mountain m on f.mountainIdx = m.mountainIdx\n" +
-                        "                         inner join user u on f.userIdx = u.userIdx\n" +
-                        "                where f.mountainIdx =?\n" +
-                        "                group by f.userIdx\n" +
-                        "                order by ranking)a where userIdx=?\n",
+                        "                                     case\n" +
+                        "                                         when a.level > 0 and a.level<2 then 'Lv1'\n" +
+                        "                                         when a.level >= 2 and a.level<4 then 'Lv2'\n" +
+                        "                                         when a.level >= 4 and a.level<6 then 'Lv3'\n" +
+                        "                                         when a.level >= 6 and a.level< 8 then 'Lv4'\n" +
+                        "                                         when a.level >= 8 and a.level<10 then 'Lv5'\n" +
+                        "                                         when a.level >= 10 then 'Lv6'end               as level,\n" +
+                        "                                               u.userImageUrl   as userImage,\n" +
+                        "                                               COUNT(f.userIdx) as flagCount\n" +
+                        "                                              ,case\n" +
+                        "                                   when minute(timediff(now(), max(f.createdAt))) < 1 then concat(minute(timediff(now(), max(f.createdAt))), '분전')\n" +
+                        "                                   when hour(timediff(now(), max(f.createdAt))) < 24 then concat(hour(timediff(now(), max(f.createdAt))), '시간전')\n" +
+                        "                                   else concat(day(timediff(now(), max(f.createdAt))), '일전') end       agoTime\n" +
+                        "\n" +
+                        "                                        from flag f\n" +
+                        "                                                 inner join mountain m on f.mountainIdx = m.mountainIdx\n" +
+                        "                                                 inner join user u on f.userIdx = u.userIdx\n" +
+                        "inner join (select count(userIdx) as level from flag where userIdx = ?) a\n" +
+                        "                                        where f.mountainIdx =?\n" +
+                        "                                        group by f.userIdx\n" +
+                        "                                        order by ranking)a where userIdx=?",
                 (rs, rowNum) -> new GetRankRes(
                         rs.getInt("ranking"),
                         rs.getInt("userIdx"),
+                        rs.getString("level"),
                         rs.getString("userName"),
                         rs.getString("userImage"),
                         rs.getInt("flagCount"),
                         rs.getString("agoTime")),
-                mountainIdx,userIdx);
+                userIdx,mountainIdx,userIdx);
     }
 
     public GetInfoRes getInfo(int userIdx, int mountainIdx){
