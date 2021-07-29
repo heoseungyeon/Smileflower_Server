@@ -43,7 +43,7 @@ public class FlagProvider {
     @Transactional
     public GetFlagRes getFlag(int userIdx, String mountain) throws BaseException {
         if (flagDao.checkMountain(mountain)==1){
-            int mountainIdx = flagDao.checkMountain(mountain);
+            int mountainIdx = flagDao.checkMountainIdx(mountain);
             GetFlagRes getFlagRes = new GetFlagRes();
             getFlagRes.setMountainIdx(mountainIdx);
             getFlagRes.setMountain(mountain);
