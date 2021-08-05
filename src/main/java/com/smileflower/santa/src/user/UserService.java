@@ -84,9 +84,6 @@ public class UserService {
             name = userDao.recordLog(userIdx, "I");
 
         } else {
-            if (userProvider.checkLog(userIdx).equals("I")) {
-                throw new BaseException(ALREADY_LOGGED);
-            }
             name = userDao.recordLog(userIdx, "I");
 
         }
