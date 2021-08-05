@@ -91,33 +91,33 @@ public class MountainDao {
 
     public List<GetRankRes> getRank(int mountainIdx){
         return this.jdbcTemplate.query("select a.ranking, a.userIdx, userName, userImage, flagCount,b.agoTime,\n" +
-                        "       case\n" +
-                        "           when a.flagCount > 0 and a.flagCount < 2 then 'Lv1'\n" +
-                        "           when a.flagCount >= 2 and a.flagCount < 4 then 'Lv2'\n" +
-                        "           when a.flagCount >= 4 and a.flagCount < 6 then 'Lv3'\n" +
-                        "           when a.flagCount >= 6 and a.flagCount < 8 then 'Lv4'\n" +
-                        "           when a.flagCount >= 8 and a.flagCount < 10 then 'Lv5'\n" +
-                        "           when a.flagCount >= 10 then 'Lv6' end as level\n" +
-                        "from (select row_number() over (order by COUNT(f.userIdx) desc, f.createdAt desc) as ranking,\n" +
-                        "             f.userIdx,\n" +
-                        "             u.name                                                               as userName,\n" +
-                        "             u.userImageUrl                                                       as userImage,\n" +
-                        "             COUNT(f.userIdx)                                                     as flagCount\n" +
+                        "                               case\n" +
+                        "                                   when a.flagCount > 0 and a.flagCount < 2 then 'Lv1'\n" +
+                        "                                   when a.flagCount >= 2 and a.flagCount < 4 then 'Lv2'\n" +
+                        "                                   when a.flagCount >= 4 and a.flagCount < 6 then 'Lv3'\n" +
+                        "                                   when a.flagCount >= 6 and a.flagCount < 8 then 'Lv4'\n" +
+                        "                                   when a.flagCount >= 8 and a.flagCount < 10 then 'Lv5'\n" +
+                        "                                   when a.flagCount >= 10 then 'Lv6' end as level\n" +
+                        "                        from (select row_number() over (order by COUNT(f.userIdx) desc, f.createdAt desc) as ranking,\n" +
+                        "                                     f.userIdx,\n" +
+                        "                                     u.name                                                               as userName,\n" +
+                        "                                     u.userImageUrl                                                       as userImage,\n" +
+                        "                                     COUNT(f.userIdx)                                                     as flagCount\n" +
                         "\n" +
-                        "      from flag f\n" +
-                        "               inner join mountain m on f.mountainIdx = m.mountainIdx\n" +
-                        "               inner join user u on f.userIdx = u.userIdx\n" +
-                        "      where f.mountainIdx = ?\n" +
+                        "                              from flag f\n" +
+                        "                                       inner join mountain m on f.mountainIdx = m.mountainIdx\n" +
+                        "                                       inner join user u on f.userIdx = u.userIdx\n" +
+                        "                              where f.mountainIdx = ?\n" +
                         "\n" +
-                        "      group by f.userIdx\n" +
-                        "      order by ranking) a inner join (select userIdx,(case\n" +
-                        "              when timestampdiff(minute , max(f.createdAt), current_timestamp()) < 60\n" +
-                        "               then concat(timestampdiff(minute, max(f.createdAt), current_timestamp()), '분전')\n" +
-                        "           when timestampdiff(hour, max(f.createdAt), current_timestamp()) < 24\n" +
-                        "               then concat(timestampdiff(hour , max(f.createdAt), current_timestamp()), '시간전')\n" +
-                        "           when timestampdiff(day, max(f.createdAt), current_timestamp()) < 7\n" +
-                        "               then concat(timestampdiff(day, max(f.createdAt), current_timestamp()), '일전') end)      agoTime\n" +
-                        " from flag f where mountainIdx= ? group by userIdx)b on a.userIdx=b.userIdx;",
+                        "                              group by f.userIdx\n" +
+                        "                              order by ranking) a inner join (select userIdx,(case\n" +
+                        "                                      when timestampdiff(minute , max(f.createdAt), current_timestamp()) < 60\n" +
+                        "                                       then concat(timestampdiff(minute, max(f.createdAt), current_timestamp()), '분전')\n" +
+                        "                                   when timestampdiff(hour, max(f.createdAt), current_timestamp()) < 24\n" +
+                        "                                       then concat(timestampdiff(hour , max(f.createdAt), current_timestamp()), '시간전')\n" +
+                        "                                   when timestampdiff(day, max(f.createdAt), current_timestamp()) < 7\n" +
+                        "                                       then concat(timestampdiff(day, max(f.createdAt), current_timestamp()), '일전') end)      agoTime\n" +
+                        "                         from flag f where mountainIdx= ? group by userIdx)b on a.userIdx=b.userIdx order by ranking;",
                 (rs, rowNum) -> new GetRankRes(
                         rs.getInt("ranking"),
                         rs.getInt("userIdx"),
