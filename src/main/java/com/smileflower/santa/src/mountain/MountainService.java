@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.databind.ser.Serializers;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,6 +88,11 @@ public class MountainService {
                 ObjectMetadata objectMetadata = new ObjectMetadata();
                 objectMetadata.setContentType(multipartFile.getContentType());
                 try (InputStream inputStream = multipartFile.getInputStream()) {
+                    String existUrl = mountainDao.findImageUrlByName(mountainName);
+                    if(existUrl !=null){
+                        System.out.println("deleteFile : " + existUrl);
+                        s3Service.deleteFile(existUrl);
+                    }
                     s3Service.uploadFile(inputStream, objectMetadata, multiPartFileName);
                     updateMountainImg(mountainName, multiPartFileName);
                 } catch (IOException e) {
