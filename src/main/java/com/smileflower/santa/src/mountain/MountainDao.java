@@ -244,9 +244,15 @@ public class MountainDao {
         String query = "select imageUrl from mountain where name =?";
         try {
             return this.jdbcTemplate.queryForObject(query, new Object[]{name}, String.class);
-        }catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             // EmptyResultDataAccessException 예외 발생시 null 리턴
             return null;
-            }
+        }
+    }
+    public String findImageUrlByName(String name) {
+        String query = "select imageUrl from mountain where name = ?";
+        String imageUrl = this.jdbcTemplate.queryForObject(query,new Object[]{name},String.class);
+
+        return imageUrl;
     }
 }

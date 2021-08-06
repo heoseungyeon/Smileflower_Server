@@ -108,7 +108,7 @@ public class ProfilePostsResponse implements Comparable<ProfilePostsResponse> {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime l2 = LocalDateTime.parse(this.getCreatedAt(),
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        if(l1.isBefore(l2)){
+        if(l1.isAfter(l2)){
             return 1;
         }
         else if(l1.isEqual(l2)){
