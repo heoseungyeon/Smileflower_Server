@@ -51,24 +51,21 @@ public class MountainDao {
                         rs.getString("pick")),
                 userIdx);
     }
-
     public GetMountainIdxRes getMountainIdx(String mountain) {
         return this.jdbcTemplate.queryForObject("select mountainIdx from mountain where mountain.name=?\n",
                 (rs, rowNum) -> new GetMountainIdxRes(
                         rs.getInt("mountainIdx")),
                 mountain);
     }
-
-    public int checkMountain(String mountain) {
-        return this.jdbcTemplate.queryForObject("select exists(select mountainIdx from mountain where mountain.name=?)", int.class, mountain);
+    public int checkMountain(String mountain){
+        return this.jdbcTemplate.queryForObject("select exists(select mountainIdx from mountain where mountain.name=?)",int.class,mountain);
     }
-
-    public String checkUserImage(int userIdx) {
+    public String checkUserImage(int userIdx){
         return this.jdbcTemplate.queryForObject("" +
-                "select userImageUrl from SantaDB.user where userIdx=?", String.class, userIdx);
+                "select userImageUrl from SantaDB.user where userIdx=?",String.class,userIdx);
     }
 
-    public List<GetRoadRes> getRoad(int mountainIdx) {
+    public List<GetRoadRes> getRoad(int mountainIdx){
         return this.jdbcTemplate.query("select roadIdx,\n" +
                         "\n" +
                         "                       concat(row_number() over (order by roadIdx),'코스')              as courseNum,\n" +
@@ -92,7 +89,7 @@ public class MountainDao {
                 mountainIdx);
     }
 
-    public List<GetRankRes> getRank(int mountainIdx) {
+    public List<GetRankRes> getRank(int mountainIdx){
         return this.jdbcTemplate.query("select a.ranking, a.userIdx, userName, userImage, flagCount,b.agoTime,\n" +
                         "                               case\n" +
                         "                                   when a.flagCount > 0 and a.flagCount < 2 then 'Lv1'\n" +
@@ -129,10 +126,9 @@ public class MountainDao {
                         rs.getString("userImage"),
                         rs.getInt("flagCount"),
                         rs.getString("agoTime")),
-                mountainIdx, mountainIdx);
+                mountainIdx,mountainIdx);
     }
-
-    public GetRankRes getmyRank(int userIdx, int mountainIdx) {
+    public GetRankRes getmyRank(int userIdx, int mountainIdx){
         return this.jdbcTemplate.queryForObject("select *\n" +
                         "from (select row_number() over (order by COUNT(f.userIdx) desc, f.createdAt desc) as ranking,\n" +
                         "             f.userIdx,\n" +
@@ -172,10 +168,10 @@ public class MountainDao {
                         rs.getString("userImage"),
                         rs.getInt("flagCount"),
                         rs.getString("agoTime")),
-                userIdx, userIdx, mountainIdx, userIdx);
+                userIdx,userIdx,mountainIdx,userIdx);
     }
 
-    public GetInfoRes getInfo(int userIdx, int mountainIdx) {
+    public GetInfoRes getInfo(int userIdx, int mountainIdx){
         return this.jdbcTemplate.queryForObject("select m.mountainIdx,\n" +
                         "       m.imageUrl                                     as mountainImg,\n" +
                         "       m.name                                         as mountainName,\n" +
@@ -210,10 +206,10 @@ public class MountainDao {
                         rs.getString("high"),
                         rs.getString("hot"),
                         rs.getString("pick")),
-                userIdx, mountainIdx);
+                userIdx,mountainIdx);
     }
 
-    public GetMapRes getMap(int mountainIdx) {
+    public GetMapRes getMap(int mountainIdx){
         return this.jdbcTemplate.queryForObject("select  latitude , longitude from mountain where mountainIdx =?",
                 (rs, rowNum) -> new GetMapRes(
                         rs.getDouble("latitude"),
@@ -221,7 +217,7 @@ public class MountainDao {
                 mountainIdx);
     }
 
-    public int checkMyRank(int userIdx, int mountainIdx) {
+    public int checkMyRank(int userIdx,int mountainIdx){
         return this.jdbcTemplate.queryForObject("select exists(select * from (select row_number() over (order by COUNT(f.userIdx) desc, f.createdAt desc) as ranking,\n" +
                 "                       f.userIdx,\n" +
                 "                       u.name as userName,\n" +
@@ -235,13 +231,13 @@ public class MountainDao {
                 "                         inner join user u on f.userIdx = u.userIdx\n" +
                 "                where f.mountainIdx = ?\n" +
                 "                group by f.userIdx\n" +
-                "                order by ranking)a where userIdx=?)", int.class, mountainIdx, userIdx);
+                "                order by ranking)a where userIdx=?)",int.class,mountainIdx,userIdx);
     }
 
-    public int updateMountainImg(String name, String imageUrl) {
+    public int updateMountainImg(String name,String imageUrl) {
         String query = "update mountain set imageUrl = ? where name = ?";
         Object[] params = new Object[]{imageUrl, name};
-        return this.jdbcTemplate.update(query, params);
+        return this.jdbcTemplate.update(query,params);
     }
 
     public String findMountainImgByName(String name) {
@@ -252,12 +248,11 @@ public class MountainDao {
             // EmptyResultDataAccessException 예외 발생시 null 리턴
             return null;
         }
+    }
+    public String findImageUrlByName(String name) {
+        String query = "select imageUrl from mountain where name = ?";
+        String imageUrl = this.jdbcTemplate.queryForObject(query,new Object[]{name},String.class);
 
-        public String findImageUrlByName (String name){
-            String query = "select imageUrl from mountain where name = ?";
-            String imageUrl = this.jdbcTemplate.queryForObject(query, new Object[]{name}, String.class);
-
-            return imageUrl;
-        }
+        return imageUrl;
     }
 }
