@@ -67,11 +67,17 @@ public class MountainProvider {
         GetMountainRankRes getMountainRankRes = new GetMountainRankRes();
         if(mountainDao.checkMyRank(userIdx,mountainIdx)==1){
              GetRankRes getmyRankRes = mountainDao.getmyRank(userIdx,mountainIdx);
-             getmyRankRes.setUserImage(s3Service.getFileUrl((getmyRankRes.getUserImage())));
+             if(getmyRankRes.getUserImage()!=null)
+                getmyRankRes.setUserImage(s3Service.getFileUrl((getmyRankRes.getUserImage())));
+             else
+                 getmyRankRes.setUserImage(null);
              getMountainRankRes.setMyRank(getmyRankRes);
         }
         for(int i=0;i<getRankRes.size();i++){
-            getRankRes.get(i).setUserImage(s3Service.getFileUrl((getRankRes.get(i).getUserImage())));
+            if(getRankRes.get(i).getUserImage()!=null)
+                getRankRes.get(i).setUserImage(s3Service.getFileUrl((getRankRes.get(i).getUserImage())));
+            else
+                getRankRes.get(i).setUserImage(null);
         }
         getMountainRankRes.setAllRank(getRankRes);
         if (getMountainRankRes.getAllRank().size()==0){
