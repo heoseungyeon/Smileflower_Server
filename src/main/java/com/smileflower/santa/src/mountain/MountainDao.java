@@ -115,8 +115,8 @@ public class MountainDao {
                         "                                       then concat(timestampdiff(minute, max(f.createdAt), current_timestamp()), '분전')\n" +
                         "                                   when timestampdiff(hour, max(f.createdAt), current_timestamp()) < 24\n" +
                         "                                       then concat(timestampdiff(hour , max(f.createdAt), current_timestamp()), '시간전')\n" +
-                        "                                   when timestampdiff(day, max(f.createdAt), current_timestamp()) < 7\n" +
-                        "                                       then concat(timestampdiff(day, max(f.createdAt), current_timestamp()), '일전') end)      agoTime\n" +
+                        "                                   ELSE\n" +
+                        "                                        concat(timestampdiff(day, max(f.createdAt), current_timestamp()), '일전') end)      agoTime\n" +
                         "                         from flag f where mountainIdx= ? group by userIdx)b on a.userIdx=b.userIdx order by ranking;",
                 (rs, rowNum) -> new GetRankRes(
                         rs.getInt("ranking"),
@@ -153,8 +153,8 @@ public class MountainDao {
                         "               then concat(timestampdiff(minute, max(f.createdAt), current_timestamp()), '분전')\n" +
                         "           when timestampdiff(hour, max(f.createdAt), current_timestamp()) < 24\n" +
                         "               then concat(timestampdiff(hour , max(f.createdAt), current_timestamp()), '시간전')\n" +
-                        "           when timestampdiff(day, max(f.createdAt), current_timestamp()) < 7\n" +
-                        "               then concat(timestampdiff(day, max(f.createdAt), current_timestamp()), '일전') end)      agoTime\n" +
+                        "           ELSE\n" +
+                        "                concat(timestampdiff(day, max(f.createdAt), current_timestamp()), '일전') end)      agoTime\n" +
                         "    from flag f where mountainIdx =f.mountainIdx and userIdx=?)b\n" +
                         "      where f.mountainIdx = ?\n" +
                         "      group by f.userIdx\n" +
