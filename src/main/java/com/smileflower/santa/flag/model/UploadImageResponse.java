@@ -1,10 +1,24 @@
 package com.smileflower.santa.flag.model;
 
 public class UploadImageResponse {
+    private boolean isFlag;
     private String fileUrl;
+
+    public UploadImageResponse(boolean isFlag, String fileUrl) {
+        this.isFlag = isFlag;
+        this.fileUrl = fileUrl;
+    }
 
     public UploadImageResponse(String fileUrl) {
         this.fileUrl = fileUrl;
+    }
+
+    public boolean getIsFlag() {
+        return isFlag;
+    }
+
+    public void setIsFlag(boolean isFlag) {
+        this.isFlag = isFlag;
     }
 
     public String getFileUrl() {

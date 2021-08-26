@@ -1,6 +1,7 @@
 package com.smileflower.santa.flag.service;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.smileflower.santa.flag.model.GpsInfoRequest;
 import com.smileflower.santa.flag.repository.FlagRepository;
 import com.smileflower.santa.flag.model.UploadImageResponse;
 import com.smileflower.santa.utils.S3Service;
@@ -23,7 +24,7 @@ public class FlagsService {
     }
 
 
-    public UploadImageResponse uploadImage(MultipartFile file, int userIdx, Long mountainIdx) {
+    public UploadImageResponse uploadImage(GpsInfoRequest gpsInfoRequest, MultipartFile file, int userIdx, Long mountainIdx) {
 
         String fileName = createFileName(file.getOriginalFilename());
 
@@ -31,13 +32,19 @@ public class FlagsService {
 
         objectMetadata.setContentType(file.getContentType());
 
-        try (InputStream inputStream = file.getInputStream()) {
-            s3Service.uploadFile(inputStream, objectMetadata, fileName);
-            updateImageUrlByIdx(userIdx, mountainIdx, fileName);
-        } catch (IOException e) {
-            throw new IllegalArgumentException(String.format("파일 변환 중 에러가 발생하였습니다 (%s)", file.getOriginalFilename()));
+        if(flagRepository.findIsFlagByLatAndLong(gpsInfoRequest.getLatitude(),gpsInfoRequest.getLongitude(),mountainIdx)==1){
+            try (InputStream inputStream = file.getInputStream()) {
+                s3Service.uploadFile(inputStream, objectMetadata, fileName);
+                updateImageUrlByIdx(userIdx, mountainIdx, fileName);
+            } catch (IOException e) {
+                throw new IllegalArgumentException(String.format("파일 변환 중 에러가 발생하였습니다 (%s)", file.getOriginalFilename()));
+            }
+            return new UploadImageResponse(true,s3Service.getFileUrl(fileName));
         }
-        return new UploadImageResponse(s3Service.getFileUrl(fileName));
+        else{
+            return new UploadImageResponse(false,null);
+        }
+
     }
 
     private int updateImageUrlByIdx(int userIdx,Long mountainIdx,String fileName){
