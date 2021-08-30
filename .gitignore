@@ -45,6 +45,5 @@ out/
 .vscode/
 .DS_Store
 logs/
-gradle/
 nohup.out
 nohup.out~5447358b6e9bc23a15364b924c202969a4636faa
