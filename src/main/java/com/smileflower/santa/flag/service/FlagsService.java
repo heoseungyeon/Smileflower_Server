@@ -35,7 +35,7 @@ public class FlagsService {
         if(flagRepository.findIsFlagByLatAndLong(gpsInfoRequest.getLatitude(),gpsInfoRequest.getLongitude(),mountainIdx)==1){
             try (InputStream inputStream = file.getInputStream()) {
                 s3Service.uploadFile(inputStream, objectMetadata, fileName);
-                updateImageUrlByIdx(userIdx, mountainIdx, fileName);
+                updateImageUrlByIdx(userIdx, mountainIdx, fileName, gpsInfoRequest.getAltitude());
             } catch (IOException e) {
                 throw new IllegalArgumentException(String.format("파일 변환 중 에러가 발생하였습니다 (%s)", file.getOriginalFilename()));
             }
@@ -47,8 +47,8 @@ public class FlagsService {
 
     }
 
-    private int updateImageUrlByIdx(int userIdx,Long mountainIdx,String fileName){
-        return flagRepository.updateImageUrlByIdx(userIdx,mountainIdx,fileName);
+    private int updateImageUrlByIdx(int userIdx, Long mountainIdx, String fileName, Double altitude){
+        return flagRepository.updateImageUrlByIdx(userIdx,mountainIdx,fileName,altitude);
     }
 
 
