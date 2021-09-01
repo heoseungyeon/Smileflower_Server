@@ -27,6 +27,14 @@ public class FlagJdbcRepository implements FlagRepository {
     }
 
     @Override
+    public int findTodayFlagByIdx(int userIdx){
+        return this.jdbcTemplate.queryForObject("select COUNT(*) from flag " +
+                "where userIdx = ? and " +
+                "CURRENT_DATE() = date_format(createdAt,'%Y-%m-%d')",new Object[]{userIdx},Integer.class);
+
+    }
+
+    @Override
     public int findIsFlagByLatAndLong(double latitude, double longitude, Long mountainIdx) {
         return this.jdbcTemplate.queryForObject("SELECT DATA.distance < 20 as isFlag\n" +
                         "FROM (\n" +

@@ -26,23 +26,25 @@ public class FlagsService {
 
     public UploadImageResponse uploadImage(GpsInfoRequest gpsInfoRequest, MultipartFile file, int userIdx, Long mountainIdx) {
 
-        String fileName = createFileName(file.getOriginalFilename());
+        boolean isDoubleFlag = flagRepository.findTodayFlagByIdx(userIdx)==0;
+        boolean isFlag = flagRepository.findIsFlagByLatAndLong(gpsInfoRequest.getLatitude(),gpsInfoRequest.getLongitude(),mountainIdx)==1;
 
-        ObjectMetadata objectMetadata = new ObjectMetadata();
+        if(isFlag && isDoubleFlag){
+            String fileName = createFileName(file.getOriginalFilename());
+            ObjectMetadata objectMetadata = new ObjectMetadata();
 
-        objectMetadata.setContentType(file.getContentType());
+            objectMetadata.setContentType(file.getContentType());
 
-        if(flagRepository.findIsFlagByLatAndLong(gpsInfoRequest.getLatitude(),gpsInfoRequest.getLongitude(),mountainIdx)==1){
             try (InputStream inputStream = file.getInputStream()) {
                 s3Service.uploadFile(inputStream, objectMetadata, fileName);
                 updateImageUrlByIdx(userIdx, mountainIdx, fileName, gpsInfoRequest.getAltitude());
             } catch (IOException e) {
                 throw new IllegalArgumentException(String.format("파일 변환 중 에러가 발생하였습니다 (%s)", file.getOriginalFilename()));
             }
-            return new UploadImageResponse(true,s3Service.getFileUrl(fileName));
+            return new UploadImageResponse(isFlag,isDoubleFlag,s3Service.getFileUrl(fileName));
         }
         else{
-            return new UploadImageResponse(false,null);
+            return new UploadImageResponse(isFlag,isDoubleFlag,null);
         }
 
     }
