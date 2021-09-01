@@ -141,7 +141,7 @@ public class ProfileJdbcRepository implements ProfileRepository {
 
     @Override
     public int findHighSumByIdx(int userIdx) {
-        return this.jdbcTemplate.queryForObject("SELECT COALESCE(SUM(b.high),0) as sum FROM flag a INNER JOIN mountain b ON a.mountainIdx = b.mountainIdx WHERE a.userIdx = ?",new Object[]{userIdx}, Integer.class);
+        return this.jdbcTemplate.queryForObject("SELECT COALESCE(SUM(height),0) as sum FROM flag WHERE userIdx = ?",new Object[]{userIdx}, Integer.class);
     }
 
 

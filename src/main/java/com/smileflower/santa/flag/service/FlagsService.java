@@ -26,29 +26,31 @@ public class FlagsService {
 
     public UploadImageResponse uploadImage(GpsInfoRequest gpsInfoRequest, MultipartFile file, int userIdx, Long mountainIdx) {
 
-        String fileName = createFileName(file.getOriginalFilename());
+        boolean isDoubleVisited = flagRepository.findTodayFlagByIdx(userIdx)!=0;
+        boolean isFlag = flagRepository.findIsFlagByLatAndLong(gpsInfoRequest.getLatitude(),gpsInfoRequest.getLongitude(),mountainIdx)==1;
 
-        ObjectMetadata objectMetadata = new ObjectMetadata();
+        if(isFlag && !isDoubleVisited){
+            String fileName = createFileName(file.getOriginalFilename());
+            ObjectMetadata objectMetadata = new ObjectMetadata();
 
-        objectMetadata.setContentType(file.getContentType());
+            objectMetadata.setContentType(file.getContentType());
 
-        if(flagRepository.findIsFlagByLatAndLong(gpsInfoRequest.getLatitude(),gpsInfoRequest.getLongitude(),mountainIdx)==1){
             try (InputStream inputStream = file.getInputStream()) {
                 s3Service.uploadFile(inputStream, objectMetadata, fileName);
-                updateImageUrlByIdx(userIdx, mountainIdx, fileName);
+                updateImageUrlByIdx(userIdx, mountainIdx, fileName, gpsInfoRequest.getAltitude());
             } catch (IOException e) {
                 throw new IllegalArgumentException(String.format("파일 변환 중 에러가 발생하였습니다 (%s)", file.getOriginalFilename()));
             }
-            return new UploadImageResponse(true,s3Service.getFileUrl(fileName));
+            return new UploadImageResponse(isFlag,isDoubleVisited,s3Service.getFileUrl(fileName));
         }
         else{
-            return new UploadImageResponse(false,null);
+            return new UploadImageResponse(isFlag,isDoubleVisited,null);
         }
 
     }
 
-    private int updateImageUrlByIdx(int userIdx,Long mountainIdx,String fileName){
-        return flagRepository.updateImageUrlByIdx(userIdx,mountainIdx,fileName);
+    private int updateImageUrlByIdx(int userIdx, Long mountainIdx, String fileName, Double altitude){
+        return flagRepository.updateImageUrlByIdx(userIdx,mountainIdx,fileName,altitude);
     }
 
 

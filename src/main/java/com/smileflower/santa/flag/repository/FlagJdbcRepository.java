@@ -18,12 +18,20 @@ public class FlagJdbcRepository implements FlagRepository {
     }
 
     @Override
-    public int updateImageUrlByIdx(int userIdx, Long mountainIdx, String filename) {
-        String query = "insert into flag (userIdx, mountainIdx,pictureUrl) VALUES (?,?,?)";
-        Object[] params = new Object[]{userIdx, mountainIdx, filename};
+    public int updateImageUrlByIdx(int userIdx, Long mountainIdx, String filename, Double altitude) {
+        String query = "insert into flag (userIdx, mountainIdx,pictureUrl,height) VALUES (?,?,?,?)";
+        Object[] params = new Object[]{userIdx, mountainIdx, filename,altitude};
         this.jdbcTemplate.update(query, params);
         String lastInsertIdQuery = "select last_insert_id()";
         return this.jdbcTemplate.queryForObject(lastInsertIdQuery, int.class);
+    }
+
+    @Override
+    public int findTodayFlagByIdx(int userIdx){
+        return this.jdbcTemplate.queryForObject("select COUNT(*) from flag " +
+                "where userIdx = ? and " +
+                "CURRENT_DATE() = date_format(createdAt,'%Y-%m-%d')",new Object[]{userIdx},Integer.class);
+
     }
 
     @Override
