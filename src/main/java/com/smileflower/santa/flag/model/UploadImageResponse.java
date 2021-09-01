@@ -2,12 +2,12 @@ package com.smileflower.santa.flag.model;
 
 public class UploadImageResponse {
     private boolean isFlag;
-    private boolean isDoubleFlag;
+    private boolean isDoubleVisited;
     private String fileUrl;
 
-    public UploadImageResponse(boolean isFlag, boolean isDoubleFlag, String fileUrl) {
+    public UploadImageResponse(boolean isFlag, boolean isDoubleVisited, String fileUrl) {
         this.isFlag = isFlag;
-        this.isDoubleFlag = isDoubleFlag;
+        this.isDoubleVisited = isDoubleVisited;
         this.fileUrl = fileUrl;
     }
 
@@ -20,12 +20,12 @@ public class UploadImageResponse {
         this.fileUrl = fileUrl;
     }
 
-    public boolean getIsDoubleFlag() {
-        return isDoubleFlag;
+    public boolean getIsDoubleVisited() {
+        return isDoubleVisited;
     }
 
-    public void setIsDoubleFlag(boolean isDoubleFlag) {
-        this.isDoubleFlag = isDoubleFlag;
+    public void setIsDoubleVisited(boolean isDoubleVisited) {
+        this.isDoubleVisited = isDoubleVisited;
     }
 
     public boolean getIsFlag() {
