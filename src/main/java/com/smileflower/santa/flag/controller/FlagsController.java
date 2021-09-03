@@ -35,4 +35,17 @@ public class FlagsController {
                 flagsService.uploadImage(gpsInfoRequest, file, userIdx, mountainIdx)
         );
     }
+
+    @PostMapping(path = "/{mountainIdx}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ApiResult<UploadImageResponse> uploadFlag(@RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude,
+                                                     @RequestParam("altitude") double altitude, @RequestPart(required = false) MultipartFile file,
+                                                     @PathVariable("mountainIdx") Long mountainIdx) {
+        int userIdx = -1;
+        if (jwtService.validateToken()) {
+            userIdx = jwtService.getUserIdxV2();
+        }
+        return ApiResult.OK(
+                flagsService.uploadImage(new GpsInfoRequest(latitude,longitude,altitude), file, userIdx, mountainIdx)
+        );
+    }
 }
