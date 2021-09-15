@@ -54,6 +54,7 @@ public class FlagController {
         }
     }
 
+
     @ResponseBody
     @PostMapping("/flags/{mountainIdx}")
     public BaseResponse<PostFlagPictureRes> createFlag(@RequestBody PostFlagPictureReq postFlagPictureReq,@PathVariable("mountainIdx")int mountainIdx ) throws BaseException {
@@ -91,6 +92,25 @@ public class FlagController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+    @ResponseBody
+    @GetMapping("/flags/{mountainIdx}/{altitude}")
+    public BaseResponse<GetAltitudeRes> getAltitude(@PathVariable("mountainIdx")int mountainIdx,
+                                                    @PathVariable("altitude")double altitude) {
+        try{
+            if(jwtService.getJwt()==null){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+
+            else{
+                int userIdx=jwtService.getUserIdx();
+                GetAltitudeRes getAltitudeRes = flagProvider.getAltitude(userIdx,mountainIdx,altitude);
+                return new BaseResponse<>(getAltitudeRes);
+            }
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
     @ResponseBody
     @PostMapping("/flags/{mountainIdx}/hard")
     public BaseResponse<PostFlagHardRes> createHard(@RequestBody PostFlagHardReq postFlagHardReq,@PathVariable("mountainIdx")int mountainIdx ) throws BaseException {

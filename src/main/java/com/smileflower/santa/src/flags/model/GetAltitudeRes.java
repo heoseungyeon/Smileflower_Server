@@ -10,8 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 
-public class GetFlagRes {
-    private int mountainIdx;
-    private String mountain= new String();
-    private int high;
+public class GetAltitudeRes {
+    private int altitude;
+    private String status;
 }

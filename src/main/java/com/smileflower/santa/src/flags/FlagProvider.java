@@ -47,6 +47,7 @@ public class FlagProvider {
             GetFlagRes getFlagRes = new GetFlagRes();
             getFlagRes.setMountainIdx(mountainIdx);
             getFlagRes.setMountain(mountain);
+            getFlagRes.setHigh(flagDao.checkhigh(mountainIdx));
             return getFlagRes;
         }
         else{
@@ -54,6 +55,8 @@ public class FlagProvider {
         }
 
     }
+
+
     public GetFlagRankRes getFlagRank(int userIdx, int mountainIdx) throws BaseException {
         GetFlagRankRes getFlagRankRes =new GetFlagRankRes();
         for(int i=0;i<2;i++){
@@ -73,6 +76,20 @@ public class FlagProvider {
             }
         }
         return getFlagRankRes;
+    }
+
+    public GetAltitudeRes getAltitude(int userIdx, int mountainIdx,double altitude) throws BaseException {
+        GetAltitudeRes getAltitudeRes =new GetAltitudeRes();
+        int nowAlti = flagDao.checkhigh(mountainIdx)-(int)altitude;
+        getAltitudeRes.setAltitude(nowAlti);
+        int admithigh = (flagDao.checkhigh(mountainIdx)*4)/5;
+        if(altitude>=admithigh){
+            getAltitudeRes.setStatus("T");
+        }
+        else{
+            getAltitudeRes.setStatus("F");
+        }
+        return getAltitudeRes;
     }
 
     public List<GetPickRes> getPick(int userIdx) throws BaseException {

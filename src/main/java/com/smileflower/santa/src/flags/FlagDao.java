@@ -42,6 +42,10 @@ public class FlagDao {
         return this.jdbcTemplate.queryForObject("select Exists(select status from picklist\n" +
                 "where mountainIdx=? and userIdx=? ) as PickExist", int.class,mountainIdx,userIdx);
     }
+    public int checkhigh(int mountainIdx){
+        return this.jdbcTemplate.queryForObject("select high from mountain where mountainIdx =?", int.class,mountainIdx);
+    }
+
     public char checkPick(int userIdx,int mountainIdx){
         return this.jdbcTemplate.queryForObject("select status from picklist \n" +
                 "where mountainIdx =? and userIdx=?", char.class,mountainIdx,userIdx);

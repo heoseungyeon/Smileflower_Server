@@ -43,6 +43,7 @@ public enum BaseResponseStatus {
     INVALID_AUTH_EMAIL_CODE(false, 2028, "인증코드가 틀렸습니다."),
     SEND_MAIL_ERROR(false, 2029, "인증코드 전송에 실패하였습니다."),
     POST_USERS_EMPTY_USER(false, 2030, "산타에 가입되어있지 않습니다."),
+    FAIL_LOCATION(false,2031,"현재 해당 산의 위치가 아닙니다."),
 
 
 
@@ -73,11 +74,7 @@ public enum BaseResponseStatus {
 
     PASSWORD_ENCRYPTION_ERROR(false, 4011, "비밀번호 암호화에 실패하였습니다."),
     PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다.");
-
-
-    // 5000 : 필요시 만들어서 쓰세요
-
-
+    
 
     private final boolean isSuccess;
     private final int code;
